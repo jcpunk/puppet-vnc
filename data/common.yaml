@@ -1,1 +1,25 @@
---- {}
+---
+vnc::server::manage_packages: true
+vnc::server::packages_ensure: installed
+
+vnc::server::manage_config: true
+vnc::server::vncserver_users_file: /etc/tigervnc/vncserver.users
+
+vnc::server::config_defaults_file: /etc/tigervnc/vncserver-config-defaults
+vnc::server::config_defaults:
+  session: gnome
+  localhost: NULL
+
+vnc::server::config_mandatory_file: /etc/tigervnc/vncserver-config-mandatory
+vnc::server::config_mandatory: {}
+
+vnc::server::polkit_file: /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+
+vnc::server::manage_services: true
+vnc::server::systemd_template_startswith: vncserver
+vnc::server::systemd_template_endswith: service
+vnc::server::vnc_servers: {}
+
+vnc::client::gui::manage_packages: true
+vnc::client::gui::packages_ensure: installed
+...
