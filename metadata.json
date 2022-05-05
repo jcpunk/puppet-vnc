@@ -1,6 +1,6 @@
 {
   "name": "jcpunk-vnc",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Pat Riehecky",
   "summary": "Manage tigervnc with systemd-logind support",
   "license": "Apache-2.0",
@@ -25,6 +25,18 @@
       "operatingsystem": "Fedora",
       "operatingsystemrelease": [
         "36"
+      ]
+    },
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "12"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "22.04"
       ]
     }
   ],

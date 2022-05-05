@@ -27,7 +27,7 @@
 <% $settings.keys.sort.each | $key | { -%>
 <% if $settings[$key] == nil { -%>
 <%= $key %>
-<% } elsif $settings[$key] == '' { -%>
+<% } elsif "${settings[$key]}" == '' { -%>
 <%= $key %>
 <% } else { -%>
 <%= $key %>=<%= $settings[$key] %>

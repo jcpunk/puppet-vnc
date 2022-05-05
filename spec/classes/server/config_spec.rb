@@ -23,6 +23,8 @@ describe 'vnc::server::config' do
             .with_group('root')
             .with_mode('0644')
             .with_notify('Class[Vnc::Server::Service]')
+            .with_content(%r{^localhost$})
+            .with_content(%r{^session=gnome$})
         }
         it {
           is_expected.to contain_file('/etc/tigervnc/vncserver-config-mandatory')
