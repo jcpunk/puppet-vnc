@@ -16,15 +16,15 @@
 #   Your /etc/tigervnc/vncserver.users
 # @param vnc_servers
 #   VNC server sessions to configure and stub out
+#   See the server.pp documentation for structure
 # @param polkit_file
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 # @param systemd_template_startswith
 #   What does the vnc template service start with, not including the '@'
 # @param systemd_template_endswith
 #   What does the vnc template service end with, not including the '.'
-# @param vnc_servers
-#   See the server.pp documentation for structure
 class vnc::server::config (
+  # lint:ignore:parameter_types
   $manage_config         = $vnc::server::manage_config,
   $config_defaults_file  = $vnc::server::config_defaults_file,
   $config_defaults       = $vnc::server::config_defaults,
@@ -37,6 +37,7 @@ class vnc::server::config (
   $systemd_template_endswith   = $vnc::server::systemd_template_endswith,
 
   $vnc_servers = $vnc::server::vnc_servers
+  # lint:endignore
 ) inherits vnc::server {
   assert_private()
 
@@ -49,7 +50,7 @@ class vnc::server::config (
     }
 
     file { $config_defaults_file:
-      ensure  => 'present',
+      ensure  => 'file',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -58,7 +59,7 @@ class vnc::server::config (
     }
 
     file { $config_mandatory_file:
-      ensure  => 'present',
+      ensure  => 'file',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -67,7 +68,7 @@ class vnc::server::config (
     }
 
     file { $vncserver_users_file:
-      ensure  => 'present',
+      ensure  => 'file',
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -102,64 +103,64 @@ class vnc::server::config (
         concat::fragment { "polkit entry for ${username} vnc service":
           target  => $polkit_file,
           order   => 20,
-          content => epp('vnc/etc/polkit-1/rules.d/25-puppet-vncserver.rules.epp', $polkit_hash)
+          content => epp('vnc/etc/polkit-1/rules.d/25-puppet-vncserver.rules.epp', $polkit_hash),
         }
       }
 
       exec { "create ~${username}/.vnc":
-        command  => "mkdir -p $(getent passwd ${username} | cut -d: -f5)/.vnc",
+        command  => "mkdir -p $(getent passwd ${username} | cut -d: -f6)/.vnc",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc",
         onlyif   => "getent passwd ${username}",
       }
       exec { "chmod 700 ~${username}/.vnc":
-        command  => "chmod 700 $(getent passwd ${username} | cut -d: -f5)/.vnc",
+        command  => "chmod 700 $(getent passwd ${username} | cut -d: -f6)/.vnc",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc --printf=%a|grep 700",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc --printf=%a|grep 700",
         onlyif   => "getent passwd ${username}",
       }
 
       exec { "create ~${username}/.vnc/config":
-        command  => "echo '# see also ${config_defaults}' > $(getent passwd ${username} | cut -d: -f5)/.vnc/config",
+        command  => "echo '# see also ${config_defaults}' > $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc/config",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
         onlyif   => "getent passwd ${username}",
       }
       exec { "chmod 600 ~${username}/.vnc/config":
-        command  => "chmod 600 $(getent passwd ${username} | cut -d: -f5)/.vnc/config",
+        command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc/config --printf=%a|grep 600",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config --printf=%a|grep 600",
         onlyif   => "getent passwd ${username}",
       }
 
       exec { "create ~${username}/.vnc/passwd":
-        command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f5)/.vnc/config",
+        command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc/config",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
         onlyif   => "getent passwd ${username}",
       }
       exec { "chmod 600 ~${username}/.vnc/passwd":
-        command  => "chmod 600 $(getent passwd ${username} | cut -d: -f5)/.vnc/passwd",
+        command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f5)/.vnc/passwd --printf=%a|grep 600",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd --printf=%a|grep 600",
         onlyif   => "getent passwd ${username}",
       }
     }
