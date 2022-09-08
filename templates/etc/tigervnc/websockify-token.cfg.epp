@@ -1,0 +1,18 @@
+<%- |
+  Hash $vnc_servers = {}
+| -%>
+#
+# This file managed by Puppet - DO NOT EDIT
+#
+
+# Websockify token assignment
+#
+# This file assigns users to specific tokens to VNC display numbers.
+# The syntax is <token>: <VNC Location>. E.g.:
+#
+# U6F7msdQ: 127.0.0.1:5900
+# 1oJw2DwG: 127.0.0.1:5901
+#
+<% $vnc_servers.keys.sort.each | $user | { -%>
+ :<%= $vnc_servers[$user]['displaynumber'] -%>=<%= $user %>
+<% } -%>

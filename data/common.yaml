@@ -22,4 +22,25 @@ vnc::server::vnc_servers: {}
 
 vnc::client::gui::manage_packages: true
 vnc::client::gui::packages_ensure: installed
+
+vnc::server::novnc::manage_packages: true
+vnc::server::novnc::packages_ensure: installed
+
+vnc::server::novnc::websockify_port: 6080
+vnc::server::novnc::websockify_webroot: /usr/share/novnc
+vnc::server::novnc::websockify_token_plugin: TokenFile
+vnc::server::novnc::websockify_token_source: /etc/tigervnc/websockify-token.cfg
+
+vnc::server::novnc::configure_webserver: true
+vnc::server::novnc::use_webserver: nginx
+vnc::server::novnc::webserver_access_log: NULL
+vnc::server::novnc::webserver_error_log: NULL
+vnc::server::novnc::webserver_web_root: "/var/www/%{facts.fqdn}"
+vnc::server::novnc::webserver_ssl_redirect: true
+vnc::server::novnc::webserver_ssl_port: 443
+vnc::server::novnc::webserver_ssl_cert: /etc/pki/certs/https_server.crt
+vnc::server::novnc::webserver_ssl_key: /etc/pki/private/https_server.key
+vnc::server::novnc::webserver_location_base: /novnc/
+
+vnc::server::novnc::make_webserver_vnc_index: true
 ...
