@@ -146,12 +146,12 @@ class vnc::server::config (
       }
 
       exec { "create ~${username}/.vnc/passwd":
-        command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
+        command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/passwdd",
         path     => ['/usr/bin', '/usr/sbin',],
         provider => 'shell',
         user     => $username,
         group    => 'users',
-        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
+        unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
         onlyif   => "getent passwd ${username}",
       }
       exec { "chmod 600 ~${username}/.vnc/passwd":

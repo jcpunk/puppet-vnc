@@ -64,10 +64,10 @@ class vnc::server (
   Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]] $vnc_servers,
   # lint:endignore
 ) {
+  contain 'vnc::server::install'
+  contain 'vnc::server::config'
+  contain 'vnc::server::service'
 
-  contain '::vnc::server::install'
-  contain '::vnc::server::config'
-  contain '::vnc::server::service'
-
-  Class['vnc::server::install'] -> Class['vnc::server::config'] -> Class['vnc::server::service']
+  Class['vnc::server::install'] -> Class['vnc::server::config'] ~> Class['vnc::server::service']
+  Class['vnc::server::install'] ~> Class['vnc::server::service']
 }

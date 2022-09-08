@@ -11,7 +11,8 @@ describe 'vnc::server' do
       it { is_expected.to compile }
       it { is_expected.to contain_class('vnc::server::install') }
       it { is_expected.to contain_class('vnc::server::config').that_requires('Class[vnc::server::install]') }
-      it { is_expected.to contain_class('vnc::server::service').that_requires('Class[vnc::server::config]') }
+      it { is_expected.to contain_class('vnc::server::config').that_notifies('Class[vnc::server::service]') }
+      it { is_expected.to contain_class('vnc::server::install').that_notifies('Class[vnc::server::service]') }
     end
   end
 end

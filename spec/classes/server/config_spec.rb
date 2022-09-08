@@ -18,7 +18,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/etc/tigervnc/vncserver-config-defaults')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
@@ -28,7 +28,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/etc/tigervnc/vncserver-config-mandatory')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
@@ -36,7 +36,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/etc/tigervnc/vncserver.users')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
@@ -128,7 +128,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/tmp/foo/bar')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
@@ -136,7 +136,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/tmp/bar/foo')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
@@ -145,7 +145,7 @@ describe 'vnc::server::config' do
         }
         it {
           is_expected.to contain_file('/tmp/baz')
-            .with_ensure('present')
+            .with_ensure('file')
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
