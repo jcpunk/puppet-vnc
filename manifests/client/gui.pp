@@ -11,9 +11,7 @@ class vnc::client::gui (
   Array $packages,
   String $packages_ensure,
 ) {
-
   if $manage_packages {
     ensure_packages($packages, { 'ensure' => $packages_ensure })
   }
-
 }

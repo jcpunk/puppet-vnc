@@ -29,8 +29,11 @@ and policykit for systemd (if user restart is granted).
 
 ### Setup Requirements **OPTIONAL**
 
-No special requirements at this time.  Eventually novnc support will
-be added, but that comes later.
+If you wish to use the novnc client, you must setup a webserver to point
+at the websocket.
+
+There are too may ways folks may want to setup the webserver, so no attempt
+is made here to provide hooks for the websockets proxy via `httpd` or `nginx`.
 
 ### Beginning with vnc
 
@@ -81,7 +84,9 @@ class { 'vnc::client::gui': }
 
 This requires the systemd units from tigervnc 1.11+.
 
-Eventually novnc support will be added.
+You must provide your own webserver to connect to websockify.
+
+You must provide your own ssl certificates for encrypted websockets.
 
 ## Development
 

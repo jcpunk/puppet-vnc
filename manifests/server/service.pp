@@ -11,12 +11,14 @@
 # @param vnc_servers
 #   See the server.pp documentation for structure
 class vnc::server::service (
+  # lint:ignore:parameter_types
   $manage_services         = $vnc::server::manage_services,
 
   $systemd_template_startswith = $vnc::server::systemd_template_startswith,
   $systemd_template_endswith   = $vnc::server::systemd_template_endswith,
 
   $vnc_servers = $vnc::server::vnc_servers
+  # lint:endignore
 ) inherits vnc::server {
   assert_private()
 

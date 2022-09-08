@@ -1,6 +1,6 @@
 # @api private
-#
-# @summary Install the vnc server pacakges
+# 
+# @summary Install the novnc packages
 #
 # @param manage_packages
 #   Should this class manage the packages
@@ -8,13 +8,13 @@
 #   List of packages to install
 # @param packages_ensure
 #   Ensure state of the vnc server packages
-class vnc::server::install (
+class vnc::client::novnc::install (
   # lint:ignore:parameter_types
-  $manage_packages = $vnc::server::manage_packages,
-  $packages = $vnc::server::packages,
-  $packages_ensure = $vnc::server::packages_ensure,
+  $manage_packages = $vnc::client::novnc::manage_packages,
+  $packages = $vnc::client::novnc::packages,
+  $packages_ensure = $vnc::client::novnc::packages_ensure,
   # lint:endignore
-) inherits vnc::server {
+) inherits vnc::client::novnc {
   assert_private()
 
   if $manage_packages {

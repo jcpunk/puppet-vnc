@@ -5,4 +5,5 @@ fixtures:
   forge_modules:
     concat: "puppetlabs/concat"
     stdlib: "puppetlabs/stdlib"
-    #systemd: "puppet/systemd"
+    systemd: "puppet/systemd"
+    crc32: "jcpunk/crc32"

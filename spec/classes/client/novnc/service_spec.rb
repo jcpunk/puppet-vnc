@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe 'vnc::server::novnc::config' do
+describe 'vnc::client::novnc::service' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }

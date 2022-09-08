@@ -3,6 +3,6 @@
 # A description of what this class does
 #
 # @example
-#   include vnc::server::novnc::config
-class vnc::server::novnc::config {
+#   include vnc::client::novnc::service
+class vnc::client::novnc::service {
 }

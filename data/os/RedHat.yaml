@@ -4,7 +4,7 @@ vnc::server::packages:
   - tigervnc-server-module
 vnc::client::gui::packages:
   - tigervnc
-vnc::server::novnc::packages:
+vnc::client::novnc::packages:
   - novnc
   - python3-websockify
 ...
