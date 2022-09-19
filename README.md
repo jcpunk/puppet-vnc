@@ -35,6 +35,8 @@ at the websocket.
 There are too may ways folks may want to setup the webserver, so no attempt
 is made here to provide hooks for the websockets proxy via `httpd` or `nginx`.
 
+It is up to you to open any firewall ports required if websockify isn't localhost only.
+
 If you want to use the SSL wrapper for `websockify` you are responsible to
 depoy the secrets and set the parameters you need.
 

@@ -67,7 +67,7 @@ class vnc::client::novnc (
   String $websockify_service_name,
   String $websockify_service_ensure,
   Boolean $websockify_service_enable,
-  Integer[0,65535] $websockify_port,
+  Variant[String, Integer[0,65535]] $websockify_port,
   Stdlib::Absolutepath $websockify_webroot,
   Boolean $websockify_use_ssl,
   Stdlib::Absolutepath $websockify_ssl_cert,

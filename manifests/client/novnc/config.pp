@@ -42,9 +42,7 @@ class vnc::client::novnc::config (
 ) inherits vnc::client::novnc {
   assert_private()
 
-  $vnc_sessions_array = $vnc_servers.map |$key, $value| { { $key => { 'token' => crc32::hex("${key} ${value}"), 'connection' => $value } } }
-  $vnc_sessions_test = $vnc_sessions_array
-  $vnc_sessions = {}
+  $vnc_sessions = Hash(flatten($vnc_servers.map |$key, $value| { [$key, { 'token' => crc32::hex("${key} ${value}"), 'connection' => $value }] }))   # lint:ignore:140chars
 
   if $manage_service_config {
     file { $websockify_config_dir:
@@ -60,7 +58,7 @@ class vnc::client::novnc::config (
         owner   => 'root',
         group   => $websockify_service_group,
         mode    => '0640',
-        content => epp('vnc/etc/websockify/websockify-token.cfg.epp', { 'vnc_sessions' => $vnc_sessions, 'test' => $vnc_sessions_test }),
+        content => epp('vnc/etc/websockify/websockify-token.cfg.epp', { 'vnc_sessions' => $vnc_sessions }),
       }
     }
   }
@@ -71,8 +69,7 @@ class vnc::client::novnc::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/var/www/novnc_users_list.html.epp',
-      { 'vnc_sessions' => $vnc_sessions, 'novnc_location' => $webserver_novnc_location }),
+      content => epp('vnc/var/www/novnc_users_list.html.epp', { 'vnc_sessions' => $vnc_sessions, 'novnc_location' => $webserver_novnc_location }),   # lint:ignore:140chars
     }
   }
 }

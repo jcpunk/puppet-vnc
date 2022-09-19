@@ -41,7 +41,7 @@ describe 'vnc::client::novnc::config' do
             'websockify_service_group' => 'test_group',
             'webserver_novnc_location' => '/some/path',
             'webserver_vnc_index' => '/tmp/index',
-            'vnc_servers' => { 'a' => '127.0.0.1:5900', 'b' => '127.0.0.1:5901', 'c' => '127.0.0.1:5902' },
+            'vnc_servers' => { 'a' => '127.0.0.1:5900', 'd' => '127.0.0.1:5901', 'c' => '127.0.0.1:5902' },
           }
         end
 
@@ -59,7 +59,9 @@ describe 'vnc::client::novnc::config' do
             .with_owner('root')
             .with_group('test_group')
             .with_mode('0640')
-            .with_content('')
+            .with_content(%r{1f188168: 127.0.0.1:5900})
+            .with_content(%r{12466ce8: 127.0.0.1:5901})
+            .with_content(%r{76b6c527: 127.0.0.1:5902})
         }
         it {
           is_expected.to contain_file('/tmp/index')
@@ -67,7 +69,9 @@ describe 'vnc::client::novnc::config' do
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
-            .with_content('')
+            .with_content(%r{^<li><a href="/some/path/vnc.html\?resize=remote&path=/some/path/websockify\?token=1f188168">a</a></li>$})
+            .with_content(%r{^<li><a href="/some/path/vnc.html\?resize=remote&path=/some/path/websockify\?token=76b6c527">c</a></li>$})
+            .with_content(%r{^<li><a href="/some/path/vnc.html\?resize=remote&path=/some/path/websockify\?token=12466ce8">d</a></li>$})
         }
       end
     end

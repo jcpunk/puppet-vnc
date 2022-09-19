@@ -12,7 +12,7 @@
 <h1>List of NOVNC Sessions known to this host</h1>
 <ul>
 <% $vnc_sessions.keys.sort.each | $session | { -%>
-  <li><a href="<%= $novnc_location %>/vnc.html?resize=remote&path=<%= $novnc_location %>/websockify?token=<%= $vnc_sessions[$session]['token'] %>"><%= $session %></a></li>
+<li><a href="<%= $novnc_location %>/vnc.html?resize=remote&path=<%= $novnc_location %>/websockify?token=<%= $vnc_sessions[$session]['token'] %>"><%= $session %></a></li>
 <% } -%>
 </ul>
 </body>
