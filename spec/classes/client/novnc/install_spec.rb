@@ -9,10 +9,7 @@ describe 'vnc::client::novnc::install' do
 
       context 'when using defaults' do
         it { is_expected.to compile }
-        if os_facts[:os]['family'] == 'RedHat'
-          it { is_expected.to contain_package('novnc').with_ensure('installed') }
-          it { is_expected.to contain_package('python3-websockify').with_ensure('installed') }
-        elsif os_facts[:os]['family'] == 'Debian'
+        if (os_facts[:os]['family'] == 'RedHat') || (os_facts[:os]['family'] == 'Debian')
           it { is_expected.to contain_package('novnc').with_ensure('installed') }
           it { is_expected.to contain_package('python3-websockify').with_ensure('installed') }
         else
