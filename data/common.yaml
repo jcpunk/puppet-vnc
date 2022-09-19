@@ -40,16 +40,12 @@ vnc::client::novnc::packages_ensure: installed
 
 vnc::client::novnc::manage_service_config: true
 vnc::client::novnc::websockify_config_dir: /etc/websockify
-vnc::client::novnc::websockify_port: '::1:6080'
-vnc::client::novnc::websockify_webroot: /usr/share/novnc
-vnc::client::novnc::websockify_token_plugin: TokenFile
+vnc::client::novnc::websockify_token_plugin: ReadOnlyTokenFile
 vnc::client::novnc::websockify_token_source: /etc/websockify/tokens.cfg
+vnc::client::novnc::websockify_auth_plugin: ''
+vnc::client::novnc::websockify_auth_source: ''
 vnc::client::novnc::websockify_service_user: novnc
 vnc::client::novnc::websockify_service_group: novnc
-
-vnc::client::novnc::websockify_use_ssl: false
-vnc::client::novnc::websockify_ssl_cert: /etc/websockify/server.crt
-vnc::client::novnc::websockify_ssl_key: /etc/websockify/server.key
 
 vnc::client::novnc::make_webserver_vnc_index: true
 vnc::client::novnc::webserver_novnc_location: /novnc
@@ -63,4 +59,13 @@ vnc::client::novnc::manage_service: true
 vnc::client::novnc::websockify_service_name: websockify.service
 vnc::client::novnc::websockify_service_ensure: running
 vnc::client::novnc::websockify_service_enable: true
+vnc::client::novnc::websockify_command: /usr/bin/websockify
+vnc::client::novnc::websockify_port: '::1:6080'
+vnc::client::novnc::websockify_webroot: /usr/share/novnc
+vnc::client::novnc::websockify_prefer_ipv6: false
+vnc::client::novnc::websockify_use_ssl: false
+vnc::client::novnc::websockify_use_ssl_only: false
+vnc::client::novnc::websockify_ssl_ca: /etc/websockify/server.ca
+vnc::client::novnc::websockify_ssl_cert: /etc/websockify/server.crt
+vnc::client::novnc::websockify_ssl_key: /etc/websockify/server.key
 ...

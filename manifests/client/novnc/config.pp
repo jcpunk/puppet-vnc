@@ -52,7 +52,7 @@ class vnc::client::novnc::config (
       mode   => '0750',
     }
 
-    if $websockify_token_plugin == 'TokenFile' {
+    if $websockify_token_plugin == 'TokenFile' or $websockify_token_plugin == 'ReadOnlyTokenFile' {
       file { $websockify_token_source:
         ensure  => 'file',
         owner   => 'root',

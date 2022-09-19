@@ -36,6 +36,7 @@ describe 'vnc::client::novnc::config' do
         let(:params) do
           {
             'websockify_config_dir' => '/tmp',
+            'websockify_token_plugin' => 'TokenFile',
             'websockify_token_source' => '/tmp/thing',
             'websockify_service_user' => 'test_user',
             'websockify_service_group' => 'test_group',
