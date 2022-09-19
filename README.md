@@ -35,6 +35,9 @@ at the websocket.
 There are too may ways folks may want to setup the webserver, so no attempt
 is made here to provide hooks for the websockets proxy via `httpd` or `nginx`.
 
+If you want to use the SSL wrapper for `websockify` you are responsible to
+depoy the secrets and set the parameters you need.
+
 ### Beginning with vnc
 
 ## Usage

@@ -10,6 +10,7 @@ vnc::client::novnc::packages:
   - novnc
   - websockify
 
+
 vnc::server::manage_config: true
 vnc::server::vncserver_users_file: /etc/tigervnc/vncserver.users
 
@@ -26,6 +27,9 @@ vnc::server::polkit_file: /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 vnc::server::manage_services: true
 vnc::server::systemd_template_startswith: vncserver
 vnc::server::systemd_template_endswith: service
+
+# format is:
+# vnc_servers[username][comment,displaynumber,ensure,enable,user_can_manage] = value
 vnc::server::vnc_servers: {}
 
 vnc::client::gui::manage_packages: true
@@ -35,18 +39,24 @@ vnc::client::novnc::manage_packages: true
 vnc::client::novnc::packages_ensure: installed
 
 vnc::client::novnc::manage_service_config: true
-vnc::client::novnc::make_webserver_vnc_index: true
 vnc::client::novnc::websockify_config_dir: /etc/websockify
 vnc::client::novnc::websockify_port: 6080
 vnc::client::novnc::websockify_webroot: /usr/share/novnc
 vnc::client::novnc::websockify_token_plugin: TokenFile
 vnc::client::novnc::websockify_token_source: /etc/websockify/tokens.cfg
+vnc::client::novnc::websockify_service_user: novnc
+vnc::client::novnc::websockify_service_group: novnc
 
 vnc::client::novnc::websockify_use_ssl: false
 vnc::client::novnc::websockify_ssl_cert: /etc/websockify/server.crt
 vnc::client::novnc::websockify_ssl_key: /etc/websockify/server.key
 
+vnc::client::novnc::make_webserver_vnc_index: true
+vnc::client::novnc::webserver_novnc_location: /novnc
 vnc::client::novnc::webserver_vnc_index: /var/www/novnc_users_list.html
+
+# format is:
+# vnc_servers[session_name] = server:port
 vnc::client::novnc::vnc_servers: {}
 
 vnc::client::novnc::manage_service: true

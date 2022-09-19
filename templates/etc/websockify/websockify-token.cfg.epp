@@ -1,5 +1,6 @@
 <%- |
-  Hash $vnc_servers = {}
+  Hash $vnc_sessions = {},
+  $test = {}
 | -%>
 #
 # This file managed by Puppet - DO NOT EDIT
@@ -13,6 +14,9 @@
 # U6F7msdQ: 127.0.0.1:5900
 # 1oJw2DwG: 127.0.0.1:5901
 #
-<% $vnc_servers.keys.sort.each | $user | { -%>
- :<%= $vnc_servers[$user]['displaynumber'] -%>=<%= $user %>
+<% $vnc_sessions.keys.sort.each | $session | { -%>
+# <%= $session %>
+<%= $vnc_sessions[$session]['token'] %>: <%= $vnc_sessions[$session]['connection'] %>
 <% } -%>
+
+<%= $test %>
