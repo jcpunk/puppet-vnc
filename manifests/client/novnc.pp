@@ -1,4 +1,4 @@
-# @summary Setup a webserver running the NoVNC interface
+# @summary Setup a websocket service for running the NoVNC interface
 #
 # @param manage_packages
 #   Should this class manage the packages
@@ -6,7 +6,6 @@
 #   List of packages to install
 # @param packages_ensure
 #   Ensure state of the vnc server packages
-#
 # @param manage_service_config
 #   should this clas manage any config files?
 # @param websockify_config_dir

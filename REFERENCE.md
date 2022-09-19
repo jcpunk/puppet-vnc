@@ -9,10 +9,14 @@
 #### Public Classes
 
 * [`vnc::client::gui`](#vncclientgui): Install the VNC GUI clients
+* [`vnc::client::novnc`](#vncclientnovnc): Setup a websocket service for running the NoVNC interface
 * [`vnc::server`](#vncserver): Install and configure the tigervnc server
 
 #### Private Classes
 
+* `vnc::client::novnc::config`: Setup any token file or webserver index
+* `vnc::client::novnc::install`: Install the novnc packages
+* `vnc::client::novnc::service`: manage the websockify service
 * `vnc::server::config`: Configure the VNC services
 * `vnc::server::install`: Install the vnc server pacakges
 * `vnc::server::service`: Ensure the VNC Server services are right
@@ -48,6 +52,213 @@ List of packages to install
 Data type: `String`
 
 Ensure state of the vnc client packages
+
+### <a name="vncclientnovnc"></a>`vnc::client::novnc`
+
+Setup a websocket service for running the NoVNC interface
+
+#### Parameters
+
+The following parameters are available in the `vnc::client::novnc` class:
+
+* [`manage_packages`](#manage_packages)
+* [`packages`](#packages)
+* [`packages_ensure`](#packages_ensure)
+* [`manage_service_config`](#manage_service_config)
+* [`websockify_config_dir`](#websockify_config_dir)
+* [`websockify_token_plugin`](#websockify_token_plugin)
+* [`websockify_token_source`](#websockify_token_source)
+* [`websockify_auth_plugin`](#websockify_auth_plugin)
+* [`websockify_auth_source`](#websockify_auth_source)
+* [`websockify_service_user`](#websockify_service_user)
+* [`websockify_service_group`](#websockify_service_group)
+* [`make_webserver_vnc_index`](#make_webserver_vnc_index)
+* [`webserver_novnc_location`](#webserver_novnc_location)
+* [`webserver_vnc_index`](#webserver_vnc_index)
+* [`manage_service`](#manage_service)
+* [`websockify_command`](#websockify_command)
+* [`websockify_service_name`](#websockify_service_name)
+* [`websockify_service_ensure`](#websockify_service_ensure)
+* [`websockify_service_enable`](#websockify_service_enable)
+* [`websockify_port`](#websockify_port)
+* [`websockify_webroot`](#websockify_webroot)
+* [`websockify_prefer_ipv6`](#websockify_prefer_ipv6)
+* [`websockify_use_ssl`](#websockify_use_ssl)
+* [`websockify_use_ssl_only`](#websockify_use_ssl_only)
+* [`websockify_ssl_ca`](#websockify_ssl_ca)
+* [`websockify_ssl_cert`](#websockify_ssl_cert)
+* [`websockify_ssl_key`](#websockify_ssl_key)
+* [`vnc_servers`](#vnc_servers)
+
+##### <a name="manage_packages"></a>`manage_packages`
+
+Data type: `Boolean`
+
+Should this class manage the packages
+
+##### <a name="packages"></a>`packages`
+
+Data type: `Array`
+
+List of packages to install
+
+##### <a name="packages_ensure"></a>`packages_ensure`
+
+Data type: `String`
+
+Ensure state of the vnc server packages
+
+##### <a name="manage_service_config"></a>`manage_service_config`
+
+Data type: `Boolean`
+
+should this clas manage any config files?
+
+##### <a name="websockify_config_dir"></a>`websockify_config_dir`
+
+Data type: `Stdlib::Absolutepath`
+
+where are config files kept
+
+##### <a name="websockify_token_plugin"></a>`websockify_token_plugin`
+
+Data type: `String`
+
+what type of token plugin is in use
+
+##### <a name="websockify_token_source"></a>`websockify_token_source`
+
+Data type: `String`
+
+what is the data source for the token plugin
+if $websockify_token_plugin == 'TokenFile' or 'ReadOnlyTokenFile', this should be the filename
+
+##### <a name="websockify_auth_plugin"></a>`websockify_auth_plugin`
+
+Data type: `String`
+
+what type of auth plugin is in use
+
+##### <a name="websockify_auth_source"></a>`websockify_auth_source`
+
+Data type: `String`
+
+what is the data source for the auth plugin
+
+##### <a name="websockify_service_user"></a>`websockify_service_user`
+
+Data type: `String`
+
+User to run the service as
+
+##### <a name="websockify_service_group"></a>`websockify_service_group`
+
+Data type: `String`
+
+Group to run the service as
+
+##### <a name="make_webserver_vnc_index"></a>`make_webserver_vnc_index`
+
+Data type: `Boolean`
+
+Make a simple index file listing out known sessions
+
+##### <a name="webserver_novnc_location"></a>`webserver_novnc_location`
+
+Data type: `Stdlib::Absolutepath`
+
+What is the URL base for novnc (probably /novnc)
+
+##### <a name="webserver_vnc_index"></a>`webserver_vnc_index`
+
+Data type: `Stdlib::Absolutepath`
+
+Where should we write out the known session index?
+
+##### <a name="manage_service"></a>`manage_service`
+
+Data type: `Boolean`
+
+Should this service be managed
+
+##### <a name="websockify_command"></a>`websockify_command`
+
+Data type: `Stdlib::Absolutepath`
+
+where is /usr/bin/websockify?
+
+##### <a name="websockify_service_name"></a>`websockify_service_name`
+
+Data type: `String`
+
+Name of service to manage
+
+##### <a name="websockify_service_ensure"></a>`websockify_service_ensure`
+
+Data type: `String`
+
+Ensure for service
+
+##### <a name="websockify_service_enable"></a>`websockify_service_enable`
+
+Data type: `Boolean`
+
+Enable for service
+
+##### <a name="websockify_port"></a>`websockify_port`
+
+Data type: `Variant[String, Integer[0,65535]]`
+
+Port to listen on
+
+##### <a name="websockify_webroot"></a>`websockify_webroot`
+
+Data type: `Stdlib::Absolutepath`
+
+Webroot for service to use
+
+##### <a name="websockify_prefer_ipv6"></a>`websockify_prefer_ipv6`
+
+Data type: `Boolean`
+
+Try IPv6 before IPv4
+
+##### <a name="websockify_use_ssl"></a>`websockify_use_ssl`
+
+Data type: `Boolean`
+
+Use an SSL certificate for websockify
+
+##### <a name="websockify_use_ssl_only"></a>`websockify_use_ssl_only`
+
+Data type: `Boolean`
+
+Only use SSL connections
+
+##### <a name="websockify_ssl_ca"></a>`websockify_ssl_ca`
+
+Data type: `Stdlib::Absolutepath`
+
+SSL Certificate Authority for websockify
+
+##### <a name="websockify_ssl_cert"></a>`websockify_ssl_cert`
+
+Data type: `Stdlib::Absolutepath`
+
+SSL certificate for websockify
+
+##### <a name="websockify_ssl_key"></a>`websockify_ssl_key`
+
+Data type: `Stdlib::Absolutepath`
+
+SSL key for websockify
+
+##### <a name="vnc_servers"></a>`vnc_servers`
+
+Data type: `Hash`
+
+A hash of VNC servers to connect to.
+ie. {'session_name' => 'host:port'}
 
 ### <a name="vncserver"></a>`vnc::server`
 

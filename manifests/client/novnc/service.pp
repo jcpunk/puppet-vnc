@@ -1,6 +1,6 @@
 # @api private
 #
-# @summary A short summary of the purpose of this class
+# @summary manage the websockify service
 #
 class vnc::client::novnc::service (
   # lint:ignore:parameter_types
