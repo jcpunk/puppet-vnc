@@ -19,6 +19,8 @@
 # @param vnc_servers
 #   VNC server sessions to configure and stub out
 #   See the server.pp documentation for structure
+# @param user_can_manage
+#   Should users be able to manage the systemd service by default
 # @param polkit_file
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 # @param systemd_template_startswith
@@ -34,6 +36,7 @@ class vnc::server::config (
   $config_mandatory_file = $vnc::server::config_mandatory_file,
   $config_mandatory      = $vnc::server::config_mandatory,
   $vncserver_users_file  = $vnc::server::vncserver_users_file,
+  $user_can_manage       = $vnc::server::user_can_manage,
   $polkit_file           = $vnc::server::polkit_file,
 
   $systemd_template_startswith = $vnc::server::systemd_template_startswith,
@@ -95,7 +98,13 @@ class vnc::server::config (
         fail("You must set the 'displaynumber' property for ${username}'s vnc server")
       }
 
-      if $vnc_servers[$username]['user_can_manage'] {
+      if 'user_can_manage' in $vnc_servers[$username] {
+        $user_mange_systemd_service = $vnc_servers[$username]['user_can_manage']
+      } else {
+        $user_mange_systemd_service = $user_can_manage
+      }
+
+      if $user_mange_systemd_service {
         $polkit_hash = {
           'systemd_template_startswith' => $systemd_template_startswith,
           'systemd_template_endswith'   => $systemd_template_endswith,

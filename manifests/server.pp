@@ -27,6 +27,8 @@
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 # @param manage_services
 #   Should this class manage the vncserver services
+# @param user_can_manage
+#   Should users be able to manage the systemd service by default
 # @param systemd_template_startswith
 #   What does the vnc template service start with, including the '@'
 # @param systemd_template_endswith
@@ -61,6 +63,7 @@ class vnc::server (
   Stdlib::Absolutepath $vncserver_users_file,
   Stdlib::Absolutepath $polkit_file,
   Boolean $manage_services,
+  Boolean $user_can_manage,
   String $systemd_template_startswith,
   String $systemd_template_endswith,
 

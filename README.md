@@ -25,7 +25,7 @@ Users can optionally be given rights to restart their own servers.
 ### What vnc affects
 
 This will impact your VNC sessions, configs in /etc/tigervnc (parameter),
-and PolicyKit for systemd (if user restart is granted).
+and PolicyKit for systemd (if user restart is granted via the params).
 
 If requested the `vnc::client::novnc` will try to setup the non-webserver
 parts of a noVNC site.
@@ -78,6 +78,7 @@ username:
   seed_home_vnc: make ~${username}/.vnc/config, default is `vnc::server::seed_user_vnc_config`
   user_can_manage: Boolean value to permit a user to run `systemctl restart vncserver@:#.service`
                    where the `#` is their listed displaynumber.
+                   default value is from $vnc::server::user_can_manage
 ```
 
 For hosts where a users's home is on a kerberos protected volume, you'll

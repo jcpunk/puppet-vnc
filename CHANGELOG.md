@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.1
+
+**Features**
+Added global param to set default for user managed services
+
 ## Release 0.3.0
 
 **Features**

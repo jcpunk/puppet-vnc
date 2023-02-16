@@ -283,6 +283,7 @@ The following parameters are available in the `vnc::server` class:
 * [`vncserver_users_file`](#vncserver_users_file)
 * [`polkit_file`](#polkit_file)
 * [`manage_services`](#manage_services)
+* [`user_can_manage`](#user_can_manage)
 * [`systemd_template_startswith`](#systemd_template_startswith)
 * [`systemd_template_endswith`](#systemd_template_endswith)
 * [`vnc_servers`](#vnc_servers)
@@ -358,6 +359,12 @@ Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 Data type: `Boolean`
 
 Should this class manage the vncserver services
+
+##### <a name="user_can_manage"></a>`user_can_manage`
+
+Data type: `Boolean`
+
+Should users be able to manage the systemd service by default
 
 ##### <a name="systemd_template_startswith"></a>`systemd_template_startswith`
 

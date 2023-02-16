@@ -26,6 +26,7 @@ vnc::server::config_mandatory: {}
 vnc::server::polkit_file: /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 
 vnc::server::manage_services: true
+vnc::server::user_can_manage: false
 vnc::server::systemd_template_startswith: vncserver
 vnc::server::systemd_template_endswith: service
 
