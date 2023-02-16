@@ -275,6 +275,7 @@ The following parameters are available in the `vnc::server` class:
 * [`packages`](#packages)
 * [`packages_ensure`](#packages_ensure)
 * [`manage_config`](#manage_config)
+* [`seed_home_vnc`](#seed_home_vnc)
 * [`config_defaults_file`](#config_defaults_file)
 * [`config_defaults`](#config_defaults)
 * [`config_mandatory_file`](#config_mandatory_file)
@@ -309,6 +310,12 @@ Ensure state of the vnc server packages
 Data type: `Boolean`
 
 Should this class manage the config
+
+##### <a name="seed_home_vnc"></a>`seed_home_vnc`
+
+Data type: `Boolean`
+
+Should this class generate a per-user ~/.vnc if it doesn't exist?
 
 ##### <a name="config_defaults_file"></a>`config_defaults_file`
 
@@ -366,7 +373,7 @@ What does the vnc template service end with (not including the '.')
 
 ##### <a name="vnc_servers"></a>`vnc_servers`
 
-Data type: `Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]]`
+Data type: `Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'seed_home_vnc', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]]`
 
 A hash of VNC servers to setup  Format:
 userA:
@@ -375,6 +382,7 @@ userA:
   ensure: running
   enable: true
   user_can_manage: true
+  seed_home_vnc: false
 userB:
   displaynumber: 2
   ensure: stopped

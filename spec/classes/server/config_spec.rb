@@ -106,6 +106,7 @@ describe 'vnc::server::config' do
                 'comment' => 'a different comment',
                 'displaynumber' => 2,
                 'user_can_manage' => false,
+                'seed_home_vnc' => false,
               },
             },
           }
@@ -157,7 +158,107 @@ describe 'vnc::server::config' do
             .with_mode('0600')
         }
         it { is_expected.to have_concat__fragment_resource_count(2) }
-        it { is_expected.to have_exec_resource_count(12) }
+        it { is_expected.to have_exec_resource_count(6) }
+
+        it { is_expected.to contain_exec('create ~userA/.vnc') }
+        it { is_expected.to contain_exec('chmod 700 ~userA/.vnc') }
+        it { is_expected.to contain_exec('create ~userA/.vnc/config') }
+        it { is_expected.to contain_exec('chmod 600 ~userA/.vnc/config') }
+        it { is_expected.to contain_exec('create ~userA/.vnc/passwd') }
+        it { is_expected.to contain_exec('chmod 600 ~userA/.vnc/passwd') }
+
+        it { is_expected.not_to contain_exec('create ~userB/.vnc') }
+        it { is_expected.not_to contain_exec('create ~userB/.vnc/config') }
+        it { is_expected.not_to contain_exec('create ~userB/.vnc/passwd') }
+      end
+
+      context 'without vnc home seeds' do
+        let(:params) do
+          {
+            'manage_config' => true,
+            'seed_home_vnc' => false,
+            'config_defaults_file' => '/tmp/foo/bar',
+            'config_defaults' => { 'nolisten' => 'tcp' },
+            'config_mandatory_file' => '/tmp/bar/foo',
+            'config_mandatory' => { 'alwaysshared' => '', 'localhost' => nil },
+            'vncserver_users_file' => '/tmp/baz',
+            'polkit_file' => '/tmp/baa',
+            'systemd_template_startswith' => 'thing@',
+            'systemd_template_endswith' => 'socket',
+            'vnc_servers' => {
+              'userA' => {
+                'comment' => 'a comment',
+                'displaynumber' => 1,
+                'user_can_manage' => true,
+              },
+              'userB' => {
+                'comment' => 'a different comment',
+                'displaynumber' => 2,
+                'user_can_manage' => false,
+                'seed_home_vnc' => true,
+              },
+            },
+          }
+        end
+
+        it { is_expected.to compile }
+        it {
+          is_expected.to contain_file('/tmp/foo')
+            .with_ensure('directory')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0755')
+        }
+        it {
+          is_expected.to contain_file('/tmp/bar')
+            .with_ensure('directory')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0755')
+        }
+        it {
+          is_expected.to contain_file('/tmp/foo/bar')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
+            .with_content(%r{^nolisten=tcp$})
+        }
+        it {
+          is_expected.to contain_file('/tmp/bar/foo')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
+            .with_content(%r{^alwaysshared$})
+            .with_content(%r{^localhost$})
+        }
+        it {
+          is_expected.to contain_file('/tmp/baz')
+            .with_ensure('file')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0644')
+        }
+        it {
+          is_expected.to contain_concat('/tmp/baa')
+            .with_owner('root')
+            .with_group('root')
+            .with_mode('0600')
+        }
+        it { is_expected.to have_concat__fragment_resource_count(2) }
+        it { is_expected.to have_exec_resource_count(6) }
+
+        it { is_expected.to contain_exec('create ~userB/.vnc') }
+        it { is_expected.to contain_exec('chmod 700 ~userB/.vnc') }
+        it { is_expected.to contain_exec('create ~userB/.vnc/config') }
+        it { is_expected.to contain_exec('chmod 600 ~userB/.vnc/config') }
+        it { is_expected.to contain_exec('create ~userB/.vnc/passwd') }
+        it { is_expected.to contain_exec('chmod 600 ~userB/.vnc/passwd') }
+
+        it { is_expected.not_to contain_exec('create ~userA/.vnc') }
+        it { is_expected.not_to contain_exec('create ~userA/.vnc/config') }
+        it { is_expected.not_to contain_exec('create ~userA/.vnc/passwd') }
       end
     end
   end

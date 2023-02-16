@@ -12,6 +12,7 @@ vnc::client::novnc::packages:
 
 
 vnc::server::manage_config: true
+vnc::server::seed_home_vnc: true
 vnc::server::vncserver_users_file: /etc/tigervnc/vncserver.users
 
 vnc::server::config_defaults_file: /etc/tigervnc/vncserver-config-defaults
@@ -29,7 +30,7 @@ vnc::server::systemd_template_startswith: vncserver
 vnc::server::systemd_template_endswith: service
 
 # format is:
-# vnc_servers[username][comment,displaynumber,ensure,enable,user_can_manage] = value
+# vnc_servers[username][comment,displaynumber,ensure,enable,user_can_manage,seed_home_vnc] = value
 vnc::server::vnc_servers: {}
 
 vnc::client::gui::manage_packages: true

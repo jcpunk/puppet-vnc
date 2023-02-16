@@ -11,6 +11,8 @@
 #   Ensure state of the vnc server packages
 # @param manage_config
 #   Should this class manage the config
+# @param seed_home_vnc
+#   Should this class generate a per-user ~/.vnc if it doesn't exist?
 # @param config_defaults_file
 #   Your /etc/tigervnc/vncserver-config-defaults
 # @param config_defaults
@@ -37,6 +39,7 @@
 #     ensure: running
 #     enable: true
 #     user_can_manage: true
+#     seed_home_vnc: false
 #   userB:
 #     displaynumber: 2
 #     ensure: stopped
@@ -50,6 +53,7 @@ class vnc::server (
   Array $packages,
   String $packages_ensure,
   Boolean $manage_config,
+  Boolean $seed_home_vnc,
   Stdlib::Absolutepath $config_defaults_file,
   Hash[String, Variant[String, Undef]] $config_defaults,
   Stdlib::Absolutepath $config_mandatory_file,
@@ -61,7 +65,7 @@ class vnc::server (
   String $systemd_template_endswith,
 
   # lint:ignore:140chars
-  Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]] $vnc_servers,
+  Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'seed_home_vnc', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]] $vnc_servers,
   # lint:endignore
 ) {
   contain 'vnc::server::install'

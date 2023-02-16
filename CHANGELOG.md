@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.0
+
+**Features**
+Ability to not make ~/.vnc dirs per user
+Ability to not make ~/.vnc dirs in general
+
 ## Release 0.2.1
 
 **Features**

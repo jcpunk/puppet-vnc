@@ -46,6 +46,7 @@ If the defaults are workable for you, basic usage is:
 
 ```puppet
 class { 'vnc::server':
+  manage_services => true,
   vnc_servers => {
     'userA' => {
        'comment' => 'Optional comment',
@@ -56,6 +57,7 @@ class { 'vnc::server':
 ```
 Or via hiera
 ```yaml
+vnc::server::manage_services: true
 vnc::server::vnc_servers:
   userA:
     comment: Optional comment
@@ -73,9 +75,17 @@ username:
   displaynumber: The VNC screen, like 1, 2, 3, etc
   ensure: service ensure, default is 'running'
   enable: service enable, default is 'true'
+  seed_home_vnc: make ~${username}/.vnc/config, default is `vnc::server::seed_user_vnc_config`
   user_can_manage: Boolean value to permit a user to run `systemctl restart vncserver@:#.service`
                    where the `#` is their listed displaynumber.
 ```
+
+For hosts where a users's home is on a kerberos protected volume, you'll
+probably want to set `seed_home_vnc = false` as the puppet process will
+not have access. Or globally via `vnc::server::seed_home_vnc`.
+
+Similarly, when "user home" is not accessible to unauthenticated systemd,
+you'll probably want to set `vnc::server::manage_services = false`.
 
 ### Client
 Similarly, VNC clients can be loaded with:
