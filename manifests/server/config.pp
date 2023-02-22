@@ -78,7 +78,7 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/vncserver.users.epp', { 'vnc_servers' => $vnc_servers }),
+      content => epp('vnc/etc/tigervnc/vncserver.users.epp', { 'vnc_servers' => $vnc_servers, 'user_can_manage' => $user_can_manage }),
     }
 
     concat { $polkit_file:

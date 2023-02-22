@@ -1,5 +1,6 @@
 <%- |
-  Hash $vnc_servers = {}
+  Boolean $user_can_manage,
+  Hash $vnc_servers = {},
 | -%>
 #
 # This file managed by Puppet - DO NOT EDIT
@@ -13,12 +14,17 @@
 # :2=andrew
 # :3=lisa
 #
+
 <% $vnc_servers.keys.sort.each | $user | { -%>
-#<% if 'comment' in $vnc_servers[$user] { %>
-#<%= $vnc_servers[$user]['comment'] %>
+#
+# VNC server for <%= $user %>
+<% if 'comment' in $vnc_servers[$user] { -%>
+# <%= $vnc_servers[$user]['comment'] %>
 <% } -%>
 <% if 'user_can_manage' in $vnc_servers[$user] { -%>
 # user_can_manage=<%= $vnc_servers[$user]['user_can_manage'] %>
-<% } -%>
- :<%= $vnc_servers[$user]['displaynumber'] -%>=<%= $user %>
+<% } else {-%>
+# user_can_manage=<%= $user_can_manage %>
+<% }-%>
+:<%= $vnc_servers[$user]['displaynumber'] -%>=<%= $user %>
 <% } -%>

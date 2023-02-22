@@ -108,6 +108,9 @@ describe 'vnc::server::config' do
                 'user_can_manage' => false,
                 'seed_home_vnc' => false,
               },
+              'userC' => {
+                'displaynumber' => 3,
+              },
             },
           }
         end
@@ -150,6 +153,9 @@ describe 'vnc::server::config' do
             .with_owner('root')
             .with_group('root')
             .with_mode('0644')
+            .with_content(%r{^:1=userA$})
+            .with_content(%r{^:2=userB$})
+            .with_content(%r{^:3=userC$})
         }
         it {
           is_expected.to contain_concat('/tmp/baa')
@@ -158,7 +164,7 @@ describe 'vnc::server::config' do
             .with_mode('0600')
         }
         it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user
-        it { is_expected.to have_exec_resource_count(6) }
+        it { is_expected.to have_exec_resource_count(12) }
 
         it { is_expected.to contain_exec('create ~userA/.vnc') }
         it { is_expected.to contain_exec('chmod 700 ~userA/.vnc') }
@@ -170,6 +176,13 @@ describe 'vnc::server::config' do
         it { is_expected.not_to contain_exec('create ~userB/.vnc') }
         it { is_expected.not_to contain_exec('create ~userB/.vnc/config') }
         it { is_expected.not_to contain_exec('create ~userB/.vnc/passwd') }
+
+        it { is_expected.to contain_exec('create ~userC/.vnc') }
+        it { is_expected.to contain_exec('chmod 700 ~userC/.vnc') }
+        it { is_expected.to contain_exec('create ~userC/.vnc/config') }
+        it { is_expected.to contain_exec('chmod 600 ~userC/.vnc/config') }
+        it { is_expected.to contain_exec('create ~userC/.vnc/passwd') }
+        it { is_expected.to contain_exec('chmod 600 ~userC/.vnc/passwd') }
       end
 
       context 'without vnc home seeds and reverse management' do

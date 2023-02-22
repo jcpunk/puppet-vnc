@@ -2,21 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 0.3.2
+
+**Bugfixes**
+- fix template output when comments are missing
+
 ## Release 0.3.1
 
 **Features**
-Added global param to set default for user managed services
+- Added global param to set default for user managed services
 
 ## Release 0.3.0
 
 **Features**
-Ability to not make ~/.vnc dirs per user
-Ability to not make ~/.vnc dirs in general
+- Ability to not make ~/.vnc dirs per user
+- Ability to not make ~/.vnc dirs in general
 
 ## Release 0.2.1
 
 **Features**
-Note compatibility with puppet/systemd 4.x.x
+- Note compatibility with puppet/systemd 4.x.x
 
 ## Release 0.2.0
 
