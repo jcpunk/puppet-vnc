@@ -24,6 +24,7 @@ vnc::server::config_mandatory_file: /etc/tigervnc/vncserver-config-mandatory
 vnc::server::config_mandatory: {}
 
 vnc::server::polkit_file: /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+vnc::server::polkit_file_mode: '0644'
 
 vnc::server::manage_services: true
 vnc::server::user_can_manage: false

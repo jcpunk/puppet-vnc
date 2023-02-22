@@ -23,6 +23,9 @@
 #   Should users be able to manage the systemd service by default
 # @param polkit_file
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+# @param polkit_file_mode
+#   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules permissions
+#   It should pretty much always be 644
 # @param systemd_template_startswith
 #   What does the vnc template service start with, not including the '@'
 # @param systemd_template_endswith
@@ -38,6 +41,7 @@ class vnc::server::config (
   $vncserver_users_file  = $vnc::server::vncserver_users_file,
   $user_can_manage       = $vnc::server::user_can_manage,
   $polkit_file           = $vnc::server::polkit_file,
+  $polkit_file_mode      = $vnc::server::polkit_file_mode,
 
   $systemd_template_startswith = $vnc::server::systemd_template_startswith,
   $systemd_template_endswith   = $vnc::server::systemd_template_endswith,
@@ -84,7 +88,7 @@ class vnc::server::config (
     concat { $polkit_file:
       owner => 'root',
       group => 'root',
-      mode  => '0600',
+      mode  => $polkit_file_mode,
     }
 
     concat::fragment { 'polkit_header':

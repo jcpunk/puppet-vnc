@@ -282,6 +282,7 @@ The following parameters are available in the `vnc::server` class:
 * [`config_mandatory`](#config_mandatory)
 * [`vncserver_users_file`](#vncserver_users_file)
 * [`polkit_file`](#polkit_file)
+* [`polkit_file_mode`](#polkit_file_mode)
 * [`manage_services`](#manage_services)
 * [`user_can_manage`](#user_can_manage)
 * [`systemd_template_startswith`](#systemd_template_startswith)
@@ -353,6 +354,13 @@ Your /etc/tigervnc/vncserver.users
 Data type: `Stdlib::Absolutepath`
 
 Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+
+##### <a name="polkit_file_mode"></a>`polkit_file_mode`
+
+Data type: `String`
+
+Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules permissions
+It should pretty much always be 644
 
 ##### <a name="manage_services"></a>`manage_services`
 

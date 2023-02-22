@@ -45,7 +45,7 @@ describe 'vnc::server::config' do
           is_expected.to contain_concat('/etc/polkit-1/rules.d/25-puppet-vncserver.rules')
             .with_owner('root')
             .with_group('root')
-            .with_mode('0600')
+            .with_mode('0644')
         }
         it { is_expected.to have_concat__fragment_resource_count(1) }
         it { is_expected.to have_exec_resource_count(0) }
@@ -161,7 +161,7 @@ describe 'vnc::server::config' do
           is_expected.to contain_concat('/tmp/baa')
             .with_owner('root')
             .with_group('root')
-            .with_mode('0600')
+            .with_mode('0644')
         }
         it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user
         it { is_expected.to have_exec_resource_count(12) }
@@ -197,6 +197,7 @@ describe 'vnc::server::config' do
             'config_mandatory' => { 'alwaysshared' => '', 'localhost' => nil },
             'vncserver_users_file' => '/tmp/baz',
             'polkit_file' => '/tmp/baa',
+            'polkit_file_mode' => '0444',
             'systemd_template_startswith' => 'thing@',
             'systemd_template_endswith' => 'socket',
             'vnc_servers' => {
@@ -257,7 +258,7 @@ describe 'vnc::server::config' do
           is_expected.to contain_concat('/tmp/baa')
             .with_owner('root')
             .with_group('root')
-            .with_mode('0600')
+            .with_mode('0444')
         }
         it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user
         it { is_expected.to have_exec_resource_count(6) }

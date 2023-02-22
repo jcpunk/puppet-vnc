@@ -25,6 +25,9 @@
 #   Your /etc/tigervnc/vncserver.users
 # @param polkit_file
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+# @param polkit_file_mode
+#   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules permissions
+#   It should pretty much always be 644
 # @param manage_services
 #   Should this class manage the vncserver services
 # @param user_can_manage
@@ -62,6 +65,7 @@ class vnc::server (
   Hash[String, Variant[String, Undef]] $config_mandatory,
   Stdlib::Absolutepath $vncserver_users_file,
   Stdlib::Absolutepath $polkit_file,
+  String $polkit_file_mode,
   Boolean $manage_services,
   Boolean $user_can_manage,
   String $systemd_template_startswith,
