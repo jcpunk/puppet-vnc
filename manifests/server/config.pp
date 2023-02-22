@@ -165,7 +165,7 @@ class vnc::server::config (
         }
 
         exec { "create ~${username}/.vnc/passwd":
-          command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/passwdd",
+          command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
           path     => ['/usr/bin', '/usr/sbin',],
           provider => 'shell',
           user     => $username,
