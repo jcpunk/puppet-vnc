@@ -42,7 +42,7 @@ class vnc::client::novnc::config (
 ) inherits vnc::client::novnc {
   assert_private()
 
-  $vnc_sessions = Hash(flatten($vnc_servers.map |$key, $value| { [$key, { 'token' => crc32::hex("${key} ${value}"), 'connection' => $value }] }))   # lint:ignore:140chars
+  $vnc_sessions = Hash(flatten($vnc_servers.map |$key, $value| { [$key, { 'token' => stdlib::crc32("${key} ${value}"), 'connection' => $value }] }))   # lint:ignore:140chars
 
   if $manage_service_config {
     file { $websockify_config_dir:

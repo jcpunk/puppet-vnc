@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.0.0
+
+**Breaking Change**
+Switch to stdlib::crc32, requires stdlib >= 8.6.0
+
 ## Release 0.4.0
 
 **Bugfixes**
