@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.0.2
+
+**Features**
+- Note puppet8 support
+
 ## Release 1.0.1
 
 **Features**
