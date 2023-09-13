@@ -24,21 +24,22 @@ describe 'vnc::client::novnc::service' do
       context 'with weird params' do
         let(:params) do
           {
-            'websockify_command'        => '/some/command',
-            'websockify_service_user'   => 'test_user',
-            'websockify_service_group'  => 'test_group',
-            'websockify_service_name'   => 'test.service',
-            'websockify_service_ensure' => 'stopped',
-            'websockify_service_enable' => false,
-            'websockify_token_plugin'   => 'TEST_TOKEN_PLUGIN',
-            'websockify_token_source'   => 'TEST_TOKEN_SOURCE',
-            'websockify_port'           => 6480,
-            'websockify_webroot'        => '/some/webroot',
-            'websockify_use_ssl'        => true,
-            'websockify_use_ssl_only'   => true,
-            'websockify_ssl_ca'         => '/cert.ca',
-            'websockify_ssl_cert'       => '/cert.cert',
-            'websockify_ssl_key'        => '/cert.key',
+            'websockify_command'             => '/some/command',
+            'websockify_service_user'        => 'test_user',
+            'websockify_service_group'       => 'test_group',
+            'websockify_service_dynamicuser' => true,
+            'websockify_service_name'        => 'test.service',
+            'websockify_service_ensure'      => 'stopped',
+            'websockify_service_enable'      => false,
+            'websockify_token_plugin'        => 'TEST_TOKEN_PLUGIN',
+            'websockify_token_source'        => 'TEST_TOKEN_SOURCE',
+            'websockify_port'                => 6480,
+            'websockify_webroot'             => '/some/webroot',
+            'websockify_use_ssl'             => true,
+            'websockify_use_ssl_only'        => true,
+            'websockify_ssl_ca'              => '/cert.ca',
+            'websockify_ssl_cert'            => '/cert.cert',
+            'websockify_ssl_key'             => '/cert.key',
           }
         end
 
@@ -58,8 +59,9 @@ describe 'vnc::client::novnc::service' do
             .with_enable(false)
             .with_active(false)
             .with_subscribe(['File[/cert.cert]', 'File[/cert.key]', 'File[/cert.ca]'])
-            .with_content(%r{^User=test_user$})
-            .with_content(%r{^Group=test_group$})
+            .without_content(%r{^User=test_user$})
+            .without_content(%r{^Group=test_group$})
+            .with_content(%r{^DynamicUser=yes$})
             .with_content(%r{^ExecStart=/some/command --verbose --web=/some/webroot --cert=/cert.cert --key=/cert.key --cafile=/cert.ca --ssl-only --token-plugin=TEST_TOKEN_PLUGIN --token-source=TEST_TOKEN_SOURCE 6480$})
         }
         # rubocop:enable Layout/LineLength

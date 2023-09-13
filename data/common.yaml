@@ -49,6 +49,7 @@ vnc::client::novnc::websockify_auth_plugin: ''
 vnc::client::novnc::websockify_auth_source: ''
 vnc::client::novnc::websockify_service_user: novnc
 vnc::client::novnc::websockify_service_group: novnc
+vnc::client::novnc::websockify_service_dynamicuser: false
 
 vnc::client::novnc::make_webserver_vnc_index: true
 vnc::client::novnc::webserver_novnc_location: /novnc

@@ -23,6 +23,8 @@
 #   User to run the service as
 # @param websockify_service_group
 #   Group to run the service as
+# @param websockify_service_dynamicuser
+#   Use systemd dynamic users for this service
 # @param make_webserver_vnc_index
 #   Make a simple index file listing out known sessions
 # @param webserver_novnc_location
@@ -67,6 +69,7 @@ class vnc::client::novnc (
   Stdlib::Absolutepath $websockify_config_dir,
   String $websockify_service_user,
   String $websockify_service_group,
+  Boolean $websockify_service_dynamicuser,
   String $websockify_token_plugin,
   String $websockify_token_source,
   String $websockify_auth_plugin,

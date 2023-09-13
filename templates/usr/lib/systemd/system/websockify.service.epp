@@ -1,6 +1,7 @@
 <%- |
   String $websockify_service_user = 'novnc',
   String $websockify_service_group = 'novnc',
+  Boolean $websockify_service_dynamicuser = false,
   Stdlib::Absolutepath $websockify_command = '/usr/bin/websockify',
   String $websockify_token_plugin = 'ReadOnlyTokenFile',
   String $websockify_token_source = '/etc/websockify/tokens.cfg',
@@ -81,8 +82,12 @@ ProtectSystem=strict
 ProtectHome=yes
 PrivateTmp=true
 
+<% if $websockify_service_dynamicuser { -%>
+DynamicUser=yes
+<% } else { -%>
 User=<%= $websockify_service_user %>
 Group=<%= $websockify_service_group %>
+<% } -%>
 
 Type=simple
 ExecStart=<%= $websockify_execstart.join(' ') %>
