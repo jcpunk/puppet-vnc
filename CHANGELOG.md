@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.2.0
+
+**Features**
+- Added flag for setting config mode
+
 ## Release 1.1.0
 
 **Features**

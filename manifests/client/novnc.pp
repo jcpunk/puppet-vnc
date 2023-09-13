@@ -10,6 +10,8 @@
 #   should this clas manage any config files?
 # @param websockify_config_dir
 #   where are config files kept
+# @param websockify_config_mode
+#   what should the config mode be
 # @param websockify_token_plugin
 #   what type of token plugin is in use
 # @param websockify_token_source
@@ -67,6 +69,7 @@ class vnc::client::novnc (
 
   Boolean $manage_service_config,
   Stdlib::Absolutepath $websockify_config_dir,
+  String $websockify_config_mode,
   String $websockify_service_user,
   String $websockify_service_group,
   Boolean $websockify_service_dynamicuser,

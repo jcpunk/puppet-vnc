@@ -14,7 +14,7 @@ describe 'vnc::client::novnc::config' do
             .with_ensure('directory')
             .with_owner('root')
             .with_group('novnc')
-            .with_mode('0750')
+            .with_mode('0640')
         }
         it {
           is_expected.to contain_file('/etc/websockify/tokens.cfg')
@@ -36,6 +36,7 @@ describe 'vnc::client::novnc::config' do
         let(:params) do
           {
             'websockify_config_dir' => '/tmp',
+            'websockify_config_mode' => '0777',
             'websockify_token_plugin' => 'TokenFile',
             'websockify_token_source' => '/tmp/thing',
             'websockify_service_user' => 'test_user',
@@ -52,14 +53,14 @@ describe 'vnc::client::novnc::config' do
             .with_ensure('directory')
             .with_owner('root')
             .with_group('test_group')
-            .with_mode('0750')
+            .with_mode('0777')
         }
         it {
           is_expected.to contain_file('/tmp/thing')
             .with_ensure('file')
             .with_owner('root')
             .with_group('test_group')
-            .with_mode('0640')
+            .with_mode('0777')
             .with_content(%r{1f188168: 127.0.0.1:5900})
             .with_content(%r{12466ce8: 127.0.0.1:5901})
             .with_content(%r{76b6c527: 127.0.0.1:5902})

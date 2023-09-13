@@ -6,6 +6,8 @@
 #   should this clas manage any config files?
 # @param websockify_config_dir
 #   where are config files kept
+# @param websockify_config_mode
+#   where permissions should the configs have
 # @param websockify_token_plugin
 #   what type of token plugin is in use
 # @param websockify_token_source
@@ -28,6 +30,7 @@ class vnc::client::novnc::config (
   # lint:ignore:parameter_types
   $manage_service_config = $vnc::client::novnc::manage_service_config,
   $websockify_config_dir = $vnc::client::novnc::websockify_config_dir,
+  $websockify_config_mode = $vnc::client::novnc::websockify_config_mode,
   $websockify_token_plugin = $vnc::client::novnc::websockify_token_plugin,
   $websockify_token_source = $vnc::client::novnc::websockify_token_source,
   $websockify_service_user = $vnc::client::novnc::websockify_service_user,
@@ -49,7 +52,7 @@ class vnc::client::novnc::config (
       ensure => 'directory',
       owner  => 'root',
       group  => $websockify_service_group,
-      mode   => '0750',
+      mode   => $websockify_config_mode,
     }
 
     if $websockify_token_plugin == 'TokenFile' or $websockify_token_plugin == 'ReadOnlyTokenFile' {
@@ -57,7 +60,7 @@ class vnc::client::novnc::config (
         ensure  => 'file',
         owner   => 'root',
         group   => $websockify_service_group,
-        mode    => '0640',
+        mode    => $websockify_config_mode,
         content => epp('vnc/etc/websockify/websockify-token.cfg.epp', { 'vnc_sessions' => $vnc_sessions }),
       }
     }

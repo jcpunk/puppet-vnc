@@ -43,6 +43,7 @@ vnc::client::novnc::packages_ensure: installed
 
 vnc::client::novnc::manage_service_config: true
 vnc::client::novnc::websockify_config_dir: /etc/websockify
+vnc::client::novnc::websockify_config_mode: '0640'
 vnc::client::novnc::websockify_token_plugin: ReadOnlyTokenFile
 vnc::client::novnc::websockify_token_source: /etc/websockify/tokens.cfg
 vnc::client::novnc::websockify_auth_plugin: ''
