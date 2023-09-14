@@ -11,6 +11,7 @@
 * [`vnc::client::gui`](#vncclientgui): Install the VNC GUI clients
 * [`vnc::client::novnc`](#vncclientnovnc): Setup a websocket service for running the NoVNC interface
 * [`vnc::server`](#vncserver): Install and configure the tigervnc server
+* [`vnc::server::export::novnc`](#vncserverexportnovnc): Map defined VNC servers into NOVNC client
 
 #### Private Classes
 
@@ -66,12 +67,14 @@ The following parameters are available in the `vnc::client::novnc` class:
 * [`packages_ensure`](#packages_ensure)
 * [`manage_service_config`](#manage_service_config)
 * [`websockify_config_dir`](#websockify_config_dir)
+* [`websockify_config_mode`](#websockify_config_mode)
 * [`websockify_token_plugin`](#websockify_token_plugin)
 * [`websockify_token_source`](#websockify_token_source)
 * [`websockify_auth_plugin`](#websockify_auth_plugin)
 * [`websockify_auth_source`](#websockify_auth_source)
 * [`websockify_service_user`](#websockify_service_user)
 * [`websockify_service_group`](#websockify_service_group)
+* [`websockify_service_dynamicuser`](#websockify_service_dynamicuser)
 * [`make_webserver_vnc_index`](#make_webserver_vnc_index)
 * [`webserver_novnc_location`](#webserver_novnc_location)
 * [`webserver_vnc_index`](#webserver_vnc_index)
@@ -120,6 +123,12 @@ Data type: `Stdlib::Absolutepath`
 
 where are config files kept
 
+##### <a name="websockify_config_mode"></a>`websockify_config_mode`
+
+Data type: `String`
+
+what should the config mode be
+
 ##### <a name="websockify_token_plugin"></a>`websockify_token_plugin`
 
 Data type: `String`
@@ -156,6 +165,12 @@ User to run the service as
 Data type: `String`
 
 Group to run the service as
+
+##### <a name="websockify_service_dynamicuser"></a>`websockify_service_dynamicuser`
+
+Data type: `Boolean`
+
+Use systemd dynamic users for this service
 
 ##### <a name="make_webserver_vnc_index"></a>`make_webserver_vnc_index`
 
@@ -403,4 +418,40 @@ userB:
   ensure: stopped
   enable: false
   user_can_manage: false
+
+### <a name="vncserverexportnovnc"></a>`vnc::server::export::novnc`
+
+Map defined VNC servers into NOVNC client
+
+#### Examples
+
+##### 
+
+```puppet
+include vnc::server::export::novnc
+```
+
+#### Parameters
+
+The following parameters are available in the `vnc::server::export::novnc` class:
+
+* [`vnc_server_hostname`](#vnc_server_hostname)
+* [`vnc_servers`](#vnc_servers)
+
+##### <a name="vnc_server_hostname"></a>`vnc_server_hostname`
+
+Data type: `String`
+
+Hostname to use as the default server target
+
+Default value: `'localhost'`
+
+##### <a name="vnc_servers"></a>`vnc_servers`
+
+Data type: `Hash`
+
+Hash of vnc_servers to export.
+You probably should just let inheritance do the work here
+
+Default value: `$vnc::server::vnc_servers`
 

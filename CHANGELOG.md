@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Ports less than 100 passed to websockify will be prefixed with `59`
 
 **Features**
+- Added class to directly export VNC Servers to novnc/websockify
 
 ## Release 1.2.0
 

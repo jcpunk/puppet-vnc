@@ -88,6 +88,8 @@ not have access. Or globally via `vnc::server::seed_home_vnc`.
 Similarly, when "user home" is not accessible to unauthenticated systemd,
 you'll probably want to set `vnc::server::manage_services = false`.
 
+You can directly export these sessions to noVNC via `include vnc::server::export::novnc`.
+
 ### Client
 Similarly, VNC clients can be loaded with:
 
