@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.0
+
+**Breaking Change**
+- Ports less than 100 passed to websockify will be prefixed with `59`
+
+**Features**
+
 ## Release 1.2.0
 
 **Features**
