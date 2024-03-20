@@ -72,7 +72,7 @@ class vnc::server (
   String $systemd_template_endswith,
 
   # lint:ignore:140chars
-  Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'seed_home_vnc', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean]]] $vnc_servers,
+  Hash[String, Hash[Enum['displaynumber', 'user_can_manage', 'seed_home_vnc', 'comment', 'ensure', 'enable'], Variant[String, Integer, Boolean, Undef]]] $vnc_servers,
   # lint:endignore
 ) {
   contain 'vnc::server::install'

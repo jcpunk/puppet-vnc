@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.1
+
+**Bugfixes**
+- Permit passing `undef` to vnc server parameters
+
 ## Release 2.0.0
 
 **Breaking Change**
