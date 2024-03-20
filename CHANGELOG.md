@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.0.2
+
+**Bugfixes**
+- Add missing newline to /etc/polkit-1/rules.d/25-puppet-vncserver.rules
+
 ## Release 2.0.1
 
 **Bugfixes**
