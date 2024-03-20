@@ -93,7 +93,7 @@ class vnc::server::config (
 
     concat::fragment { 'polkit_header':
       target  => $polkit_file,
-      content => '/* THIS FILE IS MANAGED BY PUPPET */',
+      content => "/* THIS FILE IS MANAGED BY PUPPET */\n",
       order   => '01',
     }
 
