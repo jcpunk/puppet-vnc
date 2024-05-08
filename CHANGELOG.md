@@ -5,7 +5,8 @@ All notable changes to this project will be documented in this file.
 ## Release 2.1.0
 
 **Features**
-Add suse support
+
+- Add suse support
 
 ## Release 2.0.1
 
