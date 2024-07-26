@@ -35,8 +35,6 @@ parts of a noVNC site.
 If you wish to use the novnc client, you must setup a webserver to point
 at the websocket.
 
-
-
 ### Beginning with vnc
 
 ## Usage
@@ -76,6 +74,7 @@ username:
   ensure: service ensure, default is 'running'
   enable: service enable, default is 'true'
   seed_home_vnc: make ~${username}/.vnc/config, default is `vnc::server::seed_user_vnc_config`
+  extra_users_can_manage: [ usera, userb]
   user_can_manage: Boolean value to permit a user to run `systemctl restart vncserver@:#.service`
                    where the `#` is their listed displaynumber.
                    default value is from $vnc::server::user_can_manage
@@ -84,6 +83,10 @@ username:
 For hosts where a users's home is on a kerberos protected volume, you'll
 probably want to set `seed_home_vnc = false` as the puppet process will
 not have access. Or globally via `vnc::server::seed_home_vnc`.
+
+The `extra_users_can_manage` grants `systemctl restart vncserver@:#.service`
+to these users too. The `user_can_manage` boolean must be `true` for this
+to work.
 
 Similarly, when "user home" is not accessible to unauthenticated systemd,
 you'll probably want to set `vnc::server::manage_services = false`.

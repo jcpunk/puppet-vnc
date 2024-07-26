@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.2.0
+
+**Features**
+
+- Add support for extra users who can manage the service
+
 ## Release 2.1.0
 
 **Features**

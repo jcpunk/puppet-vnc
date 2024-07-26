@@ -13,6 +13,7 @@ vnc::client::novnc::packages:
 
 vnc::server::manage_config: true
 vnc::server::seed_home_vnc: true
+vnc::server::extra_users_can_manage: []
 vnc::server::vncserver_users_file: /etc/tigervnc/vncserver.users
 
 vnc::server::config_defaults_file: /etc/tigervnc/vncserver-config-defaults

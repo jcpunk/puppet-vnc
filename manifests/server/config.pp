@@ -21,6 +21,8 @@
 #   See the server.pp documentation for structure
 # @param user_can_manage
 #   Should users be able to manage the systemd service by default
+# @param extra_users_can_manage
+#   Additional users granted access to the systemd service
 # @param polkit_file
 #   Your /etc/polkit-1/rules.d/25-puppet-vncserver.rules
 # @param polkit_file_mode
@@ -32,16 +34,17 @@
 #   What does the vnc template service end with, not including the '.'
 class vnc::server::config (
   # lint:ignore:parameter_types
-  $manage_config         = $vnc::server::manage_config,
-  $seed_home_vnc         = $vnc::server::seed_home_vnc,
-  $config_defaults_file  = $vnc::server::config_defaults_file,
-  $config_defaults       = $vnc::server::config_defaults,
-  $config_mandatory_file = $vnc::server::config_mandatory_file,
-  $config_mandatory      = $vnc::server::config_mandatory,
-  $vncserver_users_file  = $vnc::server::vncserver_users_file,
-  $user_can_manage       = $vnc::server::user_can_manage,
-  $polkit_file           = $vnc::server::polkit_file,
-  $polkit_file_mode      = $vnc::server::polkit_file_mode,
+  $manage_config          = $vnc::server::manage_config,
+  $seed_home_vnc          = $vnc::server::seed_home_vnc,
+  $config_defaults_file   = $vnc::server::config_defaults_file,
+  $config_defaults        = $vnc::server::config_defaults,
+  $config_mandatory_file  = $vnc::server::config_mandatory_file,
+  $config_mandatory       = $vnc::server::config_mandatory,
+  $vncserver_users_file   = $vnc::server::vncserver_users_file,
+  $user_can_manage        = $vnc::server::user_can_manage,
+  $extra_users_can_manage = $vnc::server::extra_users_can_manage,
+  $polkit_file            = $vnc::server::polkit_file,
+  $polkit_file_mode       = $vnc::server::polkit_file_mode,
 
   $systemd_template_startswith = $vnc::server::systemd_template_startswith,
   $systemd_template_endswith   = $vnc::server::systemd_template_endswith,
@@ -103,16 +106,22 @@ class vnc::server::config (
       }
 
       if 'user_can_manage' in $vnc_servers[$username] {
-        $user_mange_systemd_service = $vnc_servers[$username]['user_can_manage']
+        $user_manage_systemd_service = $vnc_servers[$username]['user_can_manage']
       } else {
-        $user_mange_systemd_service = $user_can_manage
+        $user_manage_systemd_service = $user_can_manage
       }
 
-      if $user_mange_systemd_service {
+      if 'extra_users_can_manage' in $vnc_servers[$username] {
+        $extra_users_to_grant = unique(flatten([$extra_users_can_manage, $vnc_servers[$username]['extra_users_can_manage']]))
+      } else {
+        $extra_users_to_grant = unique(flatten([$extra_users_can_manage]))
+      }
+
+      if $user_manage_systemd_service {
         $polkit_hash = {
           'systemd_template_startswith' => $systemd_template_startswith,
           'systemd_template_endswith'   => $systemd_template_endswith,
-          'username'                    => $username,
+          'usernames'                   => unique(flatten([$username, $extra_users_to_grant,])),
           'displaynumber'               => $vnc_servers[$username]['displaynumber'],
         }
 

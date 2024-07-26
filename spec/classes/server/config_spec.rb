@@ -94,6 +94,7 @@ describe 'vnc::server::config' do
             'config_mandatory' => { 'alwaysshared' => '', 'localhost' => nil },
             'vncserver_users_file' => '/tmp/baz',
             'polkit_file' => '/tmp/baa',
+            'extra_users_can_manage' => ['global'],
             'systemd_template_startswith' => 'thing@',
             'systemd_template_endswith' => 'socket',
             'vnc_servers' => {
@@ -101,6 +102,7 @@ describe 'vnc::server::config' do
                 'comment' => 'a comment',
                 'displaynumber' => 1,
                 'user_can_manage' => true,
+                'extra_users_can_manage' => ['specific'],
               },
               'userB' => {
                 'comment' => 'a different comment',
@@ -163,7 +165,7 @@ describe 'vnc::server::config' do
             .with_group('root')
             .with_mode('0644')
         }
-        it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user
+        it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user entry
         it { is_expected.to have_exec_resource_count(12) }
 
         it { is_expected.to contain_exec('create ~userA/.vnc') }
