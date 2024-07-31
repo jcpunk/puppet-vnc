@@ -115,7 +115,7 @@ Ensure state of the vnc server packages
 
 Data type: `Boolean`
 
-should this clas manage any config files?
+should this class manage any config files?
 
 ##### <a name="-vnc--client--novnc--websockify_config_dir"></a>`websockify_config_dir`
 
@@ -299,6 +299,7 @@ The following parameters are available in the `vnc::server` class:
 * [`polkit_file_mode`](#-vnc--server--polkit_file_mode)
 * [`manage_services`](#-vnc--server--manage_services)
 * [`user_can_manage`](#-vnc--server--user_can_manage)
+* [`vnc_home_conf`](#-vnc--server--vnc_home_conf)
 * [`seed_home_vnc`](#-vnc--server--seed_home_vnc)
 * [`systemd_template_startswith`](#-vnc--server--systemd_template_startswith)
 * [`systemd_template_endswith`](#-vnc--server--systemd_template_endswith)
@@ -383,6 +384,12 @@ Should this class manage the vncserver services
 Data type: `Boolean`
 
 Should users be able to manage the systemd service by default
+
+##### <a name="-vnc--server--vnc_home_conf"></a>`vnc_home_conf`
+
+Data type: `Stdlib::Absolutepath`
+
+Where does VNC keep its config (~/.vnc/)
 
 ##### <a name="-vnc--server--seed_home_vnc"></a>`seed_home_vnc`
 
