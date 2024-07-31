@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release X.Y.Z
+
+**Bugfix**
+
+- Update dependencies
+
 ## Release 2.3.0
 
 **Features**
