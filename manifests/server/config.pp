@@ -4,6 +4,8 @@
 #
 # @param manage_config
 #   Should this class manage the config
+# @param vnc_home_conf
+#   Where does VNC keep its config (~/.vnc/)
 # @param seed_home_vnc
 #   Should this class generate a per-user ~/.vnc if it doesn't exist?
 # @param config_defaults_file
@@ -36,6 +38,7 @@ class vnc::server::config (
   # lint:ignore:parameter_types
   $manage_config          = $vnc::server::manage_config,
   $seed_home_vnc          = $vnc::server::seed_home_vnc,
+  $vnc_home_conf          = $vnc::server::vnc_home_conf,
   $config_defaults_file   = $vnc::server::config_defaults_file,
   $config_defaults        = $vnc::server::config_defaults,
   $config_mandatory_file  = $vnc::server::config_mandatory_file,
@@ -139,61 +142,73 @@ class vnc::server::config (
       }
 
       if $seed_user_home_vnc {
-        exec { "create ~${username}/.vnc":
-          command  => "mkdir -p $(getent passwd ${username} | cut -d: -f6)/.vnc",
+        exec { "create ~${username}${vnc_home_conf}":
+          command  => "mkdir -p $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}",
+          onlyif   => "getent passwd ${username}",
+        }
+        exec { "chmod 700 ~${username}${vnc_home_conf}":
+          command  => "chmod 700 $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700",
+          onlyif   => "getent passwd ${username}",
+        }
+
+        exec { "create ~${username}${vnc_home_conf}/config":
+          command  => "echo '# see also ${config_defaults}' > $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/config",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/config",
+          onlyif   => "getent passwd ${username}",
+        }
+        exec { "chmod 600 ~${username}${vnc_home_conf}/config":
+          command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/config",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/config --printf=%a|grep 600",
+          onlyif   => "getent passwd ${username}",
+        }
+
+        exec { "create ~${username}${vnc_home_conf}/passwd":
+          command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/passwd",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/passwd",
+          onlyif   => "getent passwd ${username}",
+        }
+        exec { "chmod 600 ~${username}${vnc_home_conf}/passwd":
+          command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/passwd",
+          path     => ['/usr/bin', '/usr/sbin',],
+          provider => 'shell',
+          user     => $username,
+          group    => 'users',
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf}/passwd --printf=%a|grep 600",
+          onlyif   => "getent passwd ${username}",
+        }
+
+        if $vnc_home_conf != '/.vnc' { # create old compat dir if needed
+          exec { "create ~${username}/.vnc link":
+          command  => "ln -s $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} $(getent passwd ${username} | cut -d: -f6)/.vnc",
           path     => ['/usr/bin', '/usr/sbin',],
           provider => 'shell',
           user     => $username,
           group    => 'users',
           unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc",
           onlyif   => "getent passwd ${username}",
-        }
-        exec { "chmod 700 ~${username}/.vnc":
-          command  => "chmod 700 $(getent passwd ${username} | cut -d: -f6)/.vnc",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc --printf=%a|grep 700",
-          onlyif   => "getent passwd ${username}",
-        }
-
-        exec { "create ~${username}/.vnc/config":
-          command  => "echo '# see also ${config_defaults}' > $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
-          onlyif   => "getent passwd ${username}",
-        }
-        exec { "chmod 600 ~${username}/.vnc/config":
-          command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/.vnc/config",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/config --printf=%a|grep 600",
-          onlyif   => "getent passwd ${username}",
-        }
-
-        exec { "create ~${username}/.vnc/passwd":
-          command  => "head -1 /dev/urandom > $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
-          onlyif   => "getent passwd ${username}",
-        }
-        exec { "chmod 600 ~${username}/.vnc/passwd":
-          command  => "chmod 600 $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc/passwd --printf=%a|grep 600",
-          onlyif   => "getent passwd ${username}",
+          }
         }
       }
     }

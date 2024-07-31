@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.0
+
+**Features**
+
+- Add support for setting vnc home config to ~/.local/config or something else
+
 ## Release 2.2.0
 
 **Features**

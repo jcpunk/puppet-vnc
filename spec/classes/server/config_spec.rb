@@ -88,6 +88,7 @@ describe 'vnc::server::config' do
         let(:params) do
           {
             'manage_config' => true,
+            'vnc_home_conf' => '/.config/somedir',
             'config_defaults_file' => '/tmp/foo/bar',
             'config_defaults' => { 'nolisten' => 'tcp' },
             'config_mandatory_file' => '/tmp/bar/foo',
@@ -165,26 +166,41 @@ describe 'vnc::server::config' do
             .with_group('root')
             .with_mode('0644')
         }
-        it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user entry
-        it { is_expected.to have_exec_resource_count(12) }
 
-        it { is_expected.to contain_exec('create ~userA/.vnc') }
-        it { is_expected.to contain_exec('chmod 700 ~userA/.vnc') }
-        it { is_expected.to contain_exec('create ~userA/.vnc/config') }
-        it { is_expected.to contain_exec('chmod 600 ~userA/.vnc/config') }
-        it { is_expected.to contain_exec('create ~userA/.vnc/passwd') }
-        it { is_expected.to contain_exec('chmod 600 ~userA/.vnc/passwd') }
+        it {
+          is_expected.to contain_concat__fragment('polkit_header')
+        }
+        it {
+          is_expected.to contain_concat__fragment('polkit entry for userA vnc service')
+        }
+        it {
+          is_expected.not_to contain_concat__fragment('polkit entry for userB vnc service')
+        }
+        it {
+          is_expected.not_to contain_concat__fragment('polkit entry for userC vnc service')
+        }
 
-        it { is_expected.not_to contain_exec('create ~userB/.vnc') }
-        it { is_expected.not_to contain_exec('create ~userB/.vnc/config') }
-        it { is_expected.not_to contain_exec('create ~userB/.vnc/passwd') }
+        it { is_expected.to have_exec_resource_count(14) }
 
-        it { is_expected.to contain_exec('create ~userC/.vnc') }
-        it { is_expected.to contain_exec('chmod 700 ~userC/.vnc') }
-        it { is_expected.to contain_exec('create ~userC/.vnc/config') }
-        it { is_expected.to contain_exec('chmod 600 ~userC/.vnc/config') }
-        it { is_expected.to contain_exec('create ~userC/.vnc/passwd') }
-        it { is_expected.to contain_exec('chmod 600 ~userC/.vnc/passwd') }
+        it { is_expected.to contain_exec('create ~userA/.vnc link') }
+        it { is_expected.to contain_exec('create ~userA/.config/somedir') }
+        it { is_expected.to contain_exec('chmod 700 ~userA/.config/somedir') }
+        it { is_expected.to contain_exec('create ~userA/.config/somedir/config') }
+        it { is_expected.to contain_exec('chmod 600 ~userA/.config/somedir/config') }
+        it { is_expected.to contain_exec('create ~userA/.config/somedir/passwd') }
+        it { is_expected.to contain_exec('chmod 600 ~userA/.config/somedir/passwd') }
+
+        it { is_expected.not_to contain_exec('create ~userB/.config/somedir') }
+        it { is_expected.not_to contain_exec('create ~userB/.config/somedir/config') }
+        it { is_expected.not_to contain_exec('create ~userB/.config/somedir/passwd') }
+
+        it { is_expected.to contain_exec('create ~userC/.vnc link') }
+        it { is_expected.to contain_exec('create ~userC/.config/somedir') }
+        it { is_expected.to contain_exec('chmod 700 ~userC/.config/somedir') }
+        it { is_expected.to contain_exec('create ~userC/.config/somedir/config') }
+        it { is_expected.to contain_exec('chmod 600 ~userC/.config/somedir/config') }
+        it { is_expected.to contain_exec('create ~userC/.config/somedir/passwd') }
+        it { is_expected.to contain_exec('chmod 600 ~userC/.config/somedir/passwd') }
       end
 
       context 'without vnc home seeds and reverse management' do
@@ -262,7 +278,17 @@ describe 'vnc::server::config' do
             .with_group('root')
             .with_mode('0444')
         }
-        it { is_expected.to have_concat__fragment_resource_count(2) } # 1 header, 1 user
+
+        it {
+          is_expected.to contain_concat__fragment('polkit_header')
+        }
+        it {
+          is_expected.not_to contain_concat__fragment('polkit entry for userA vnc service')
+        }
+        it {
+          is_expected.to contain_concat__fragment('polkit entry for userB vnc service')
+        }
+
         it { is_expected.to have_exec_resource_count(6) }
 
         it { is_expected.to contain_exec('create ~userB/.vnc') }

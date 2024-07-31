@@ -7,7 +7,7 @@
 # @param packages_ensure
 #   Ensure state of the vnc server packages
 # @param manage_service_config
-#   should this clas manage any config files?
+#   should this class manage any config files?
 # @param websockify_config_dir
 #   where are config files kept
 # @param websockify_config_mode

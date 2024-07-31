@@ -30,6 +30,8 @@
 #   Should this class manage the vncserver services
 # @param user_can_manage
 #   Should users be able to manage the systemd service by default
+# @param vnc_home_conf
+#   Where does VNC keep its config (~/.vnc/)
 # @param seed_home_vnc
 #   Should this class generate a per-user ~/.vnc if it doesn't exist?
 # @param systemd_template_startswith
@@ -64,6 +66,7 @@ class vnc::server (
   Hash[String, Variant[String, Undef]] $config_mandatory,
   Stdlib::Absolutepath $vncserver_users_file,
   Stdlib::Absolutepath $polkit_file,
+  Stdlib::Absolutepath $vnc_home_conf,
   String $polkit_file_mode,
   Boolean $manage_services,
   Boolean $user_can_manage,
