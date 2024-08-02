@@ -157,7 +157,7 @@ class vnc::server::config (
           provider => 'shell',
           user     => $username,
           group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700",
+          unless   => [ "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700", "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%F|grep link" ]
           onlyif   => "getent passwd ${username}",
         }
 

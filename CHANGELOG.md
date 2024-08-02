@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.3
+
+**Bugfix**
+
+- don't try to change mode of symbolic link
+
 ## Release 2.3.2
 
 **Bugfix**
