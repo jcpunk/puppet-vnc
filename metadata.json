@@ -1,6 +1,6 @@
 {
   "name": "jcpunk-vnc",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "author": "Pat Riehecky",
   "summary": "Manage tigervnc with systemd-logind support",
   "license": "Apache-2.0",

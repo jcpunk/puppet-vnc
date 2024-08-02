@@ -72,7 +72,12 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/config.epp', { 'config_defaults_file' => $config_defaults_file, 'config_mandatory_file' => $config_mandatory_file, 'vnc_home_conf' => $vnc_home_conf, 'settings' => $config_defaults }),
+      content => epp('vnc/etc/tigervnc/config.epp', {
+          'config_defaults_file'  => $config_defaults_file,
+          'config_mandatory_file' => $config_mandatory_file,
+          'vnc_home_conf'         => $vnc_home_conf,
+          'settings'              => $config_defaults
+      }),
       notify  => Class['Vnc::Server::Service'],
     }
 
@@ -81,7 +86,12 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/config.epp', { 'config_defaults_file' => $config_defaults_file, 'config_mandatory_file' => $config_mandatory_file, 'vnc_home_conf' => $vnc_home_conf,'settings' => $config_mandatory }),
+      content => epp('vnc/etc/tigervnc/config.epp', {
+          'config_defaults_file'  => $config_defaults_file,
+          'config_mandatory_file' => $config_mandatory_file,
+          'vnc_home_conf'         => $vnc_home_conf,
+          'settings'              => $config_mandatory
+      }),
       notify  => Class['Vnc::Server::Service'],
     }
 
@@ -90,7 +100,10 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/vncserver.users.epp', { 'vnc_servers' => $vnc_servers, 'user_can_manage' => $user_can_manage }),
+      content => epp('vnc/etc/tigervnc/vncserver.users.epp', {
+          'vnc_servers'     => $vnc_servers,
+          'user_can_manage' => $user_can_manage
+      }),
     }
 
     concat { $polkit_file:
@@ -159,8 +172,11 @@ class vnc::server::config (
           provider => 'shell',
           user     => $username,
           group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700",
-          onlyif   => ["getent passwd ${username}", "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%F|grep -v link"],
+          onlyif   => [
+            "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%F|grep -v link",
+            "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep -v 700",
+            "getent passwd ${username}",
+          ],
         }
 
         exec { "create ~${username}${vnc_home_conf}/config":

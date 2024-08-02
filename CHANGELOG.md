@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.6
+
+**Bugfix**
+
+- Puppet 7 and Puppet 8 respond differently when using mix of `unless` and `onlyif`
+
 ## Release 2.3.5
 
 **Bugfix**
