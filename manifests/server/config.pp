@@ -5,7 +5,9 @@
 # @param manage_config
 #   Should this class manage the config
 # @param vnc_home_conf
-#   Where does VNC keep its config (~/.vnc/)
+#   Where does VNC keep its config (/.vnc)
+#   NOTE: MUST start with `/`
+#   NOTE: MUST NOT end with `/`
 # @param seed_home_vnc
 #   Should this class generate a per-user ~/.vnc if it doesn't exist?
 # @param config_defaults_file
@@ -157,8 +159,8 @@ class vnc::server::config (
           provider => 'shell',
           user     => $username,
           group    => 'users',
-          unless   => ["stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700", "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%F|grep link"],
-          onlyif   => "getent passwd ${username}",
+          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%a|grep 700",
+          onlyif   => ["getent passwd ${username}", "stat $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} --printf=%F|grep -v link"],
         }
 
         exec { "create ~${username}${vnc_home_conf}/config":

@@ -395,7 +395,9 @@ Who else should be able to manage the VNC sessions
 
 Data type: `Stdlib::Absolutepath`
 
-Where does VNC keep its config (~/.vnc/)
+Where does VNC keep its config (/.vnc)
+NOTE: MUST start with `/`
+NOTE: MUST NOT end with `/`
 
 ##### <a name="-vnc--server--seed_home_vnc"></a>`seed_home_vnc`
 

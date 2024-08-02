@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.5
+
+**Bugfix**
+
+- Fix backwards logic on link test
+
 ## Release 2.3.4
 
 **Bugfix**

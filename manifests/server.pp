@@ -33,7 +33,9 @@
 # @param extra_users_can_manage
 #   Who else should be able to manage the VNC sessions
 # @param vnc_home_conf
-#   Where does VNC keep its config (~/.vnc/)
+#   Where does VNC keep its config (/.vnc)
+#   NOTE: MUST start with `/`
+#   NOTE: MUST NOT end with `/`
 # @param seed_home_vnc
 #   Should this class generate a per-user ~/.vnc if it doesn't exist?
 # @param systemd_template_startswith
