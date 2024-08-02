@@ -30,6 +30,8 @@
 #   Should this class manage the vncserver services
 # @param user_can_manage
 #   Should users be able to manage the systemd service by default
+# @param extra_users_can_manage
+#   Who else should be able to manage the VNC sessions
 # @param vnc_home_conf
 #   Where does VNC keep its config (~/.vnc/)
 # @param seed_home_vnc

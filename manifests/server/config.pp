@@ -70,7 +70,7 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/config.epp', { 'settings' => $config_defaults }),
+      content => epp('vnc/etc/tigervnc/config.epp', { 'config_defaults_file' => $config_defaults_file, 'config_mandatory_file' => $config_mandatory_file, 'vnc_home_conf' => $vnc_home_conf, 'settings' => $config_defaults }),
       notify  => Class['Vnc::Server::Service'],
     }
 
@@ -79,7 +79,7 @@ class vnc::server::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/etc/tigervnc/config.epp', { 'settings' => $config_mandatory }),
+      content => epp('vnc/etc/tigervnc/config.epp', { 'config_defaults_file' => $config_defaults_file, 'config_mandatory_file' => $config_mandatory_file, 'vnc_home_conf' => $vnc_home_conf,'settings' => $config_mandatory }),
       notify  => Class['Vnc::Server::Service'],
     }
 
@@ -201,13 +201,13 @@ class vnc::server::config (
 
         if $vnc_home_conf != '/.vnc' { # create old compat dir if needed
           exec { "create ~${username}/.vnc link":
-          command  => "ln -s $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} $(getent passwd ${username} | cut -d: -f6)/.vnc",
-          path     => ['/usr/bin', '/usr/sbin',],
-          provider => 'shell',
-          user     => $username,
-          group    => 'users',
-          unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc",
-          onlyif   => "getent passwd ${username}",
+            command  => "ln -s $(getent passwd ${username} | cut -d: -f6)/${vnc_home_conf} $(getent passwd ${username} | cut -d: -f6)/.vnc",
+            path     => ['/usr/bin', '/usr/sbin',],
+            provider => 'shell',
+            user     => $username,
+            group    => 'users',
+            unless   => "stat $(getent passwd ${username} | cut -d: -f6)/.vnc",
+            onlyif   => "getent passwd ${username}",
           }
         }
       }

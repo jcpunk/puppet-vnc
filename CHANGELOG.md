@@ -2,10 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## Release X.Y.Z
+## Release 2.3.1
 
 **Bugfix**
 
+- Fix doc in config files
 - Update dependencies
 
 ## Release 2.3.0
