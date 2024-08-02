@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.4
+
+**Bugfix**
+
+- Forgot to commit `,`
+
 ## Release 2.3.3
 
 **Bugfix**
