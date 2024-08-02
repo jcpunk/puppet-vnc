@@ -12,10 +12,10 @@
 # are parsed in the following order:
 #
 #  <%= $config_defaults_file %>
-#  ~<%= $vnc_home_conf %>
+#  ~<%= $vnc_home_conf %>/config
 #  <%= $config_mandatory_file %>
 #
-# The settings in the default config can be changed in ~<%= vnc_home_conf%>/config
+# The settings in the default config can be changed in ~<%= $vnc_home_conf%>/config
 # To see what settings your VNC server honors run, `vncconfig -list`
 # in your VNC session.
 #

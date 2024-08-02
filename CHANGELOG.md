@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.2
+
+**Bugfix**
+
+- Fix doc typos
+
 ## Release 2.3.1
 
 **Bugfix**

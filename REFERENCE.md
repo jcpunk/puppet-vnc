@@ -299,12 +299,12 @@ The following parameters are available in the `vnc::server` class:
 * [`polkit_file_mode`](#-vnc--server--polkit_file_mode)
 * [`manage_services`](#-vnc--server--manage_services)
 * [`user_can_manage`](#-vnc--server--user_can_manage)
+* [`extra_users_can_manage`](#-vnc--server--extra_users_can_manage)
 * [`vnc_home_conf`](#-vnc--server--vnc_home_conf)
 * [`seed_home_vnc`](#-vnc--server--seed_home_vnc)
 * [`systemd_template_startswith`](#-vnc--server--systemd_template_startswith)
 * [`systemd_template_endswith`](#-vnc--server--systemd_template_endswith)
 * [`vnc_servers`](#-vnc--server--vnc_servers)
-* [`extra_users_can_manage`](#-vnc--server--extra_users_can_manage)
 
 ##### <a name="-vnc--server--manage_packages"></a>`manage_packages`
 
@@ -385,6 +385,12 @@ Data type: `Boolean`
 
 Should users be able to manage the systemd service by default
 
+##### <a name="-vnc--server--extra_users_can_manage"></a>`extra_users_can_manage`
+
+Data type: `Array[String]`
+
+Who else should be able to manage the VNC sessions
+
 ##### <a name="-vnc--server--vnc_home_conf"></a>`vnc_home_conf`
 
 Data type: `Stdlib::Absolutepath`
@@ -426,12 +432,6 @@ userB:
   ensure: stopped
   enable: false
   user_can_manage: false
-
-##### <a name="-vnc--server--extra_users_can_manage"></a>`extra_users_can_manage`
-
-Data type: `Array[String]`
-
-
 
 ### <a name="vnc--server--export--novnc"></a>`vnc::server::export::novnc`
 
