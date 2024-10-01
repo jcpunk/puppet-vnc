@@ -72,7 +72,7 @@ class vnc::client::novnc::config (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('vnc/var/www/novnc_users_list.html.epp', { 'vnc_sessions' => $vnc_sessions, 'novnc_location' => $webserver_novnc_location }),   # lint:ignore:140chars
+      content => epp('vnc/var/www/novnc_users_list.html.epp', { 'host' => "${trusted['hostname']}.${trusted['domain']}", 'vnc_sessions' => $vnc_sessions, 'novnc_location' => $webserver_novnc_location }),   # lint:ignore:140chars
     }
   }
 }

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 2.3.7
+
+**Features**
+
+- Add hostname to static html file
+
 ## Release 2.3.6
 
 **Bugfix**
