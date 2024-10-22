@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 3.0.0
+
+**Breaking Changes**
+
+- Require stdlib 9.x
+
 ## Release 2.3.7
 
 **Features**
