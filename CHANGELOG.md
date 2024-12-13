@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 3.0.1
+
+**Features**
+
+- Permit puppet-systemd v8
+
 ## Release 3.0.0
 
 **Breaking Changes**
