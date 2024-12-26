@@ -27,14 +27,6 @@ Users can optionally be given rights to restart their own servers.
 This will impact your VNC sessions, configs in /etc/tigervnc (parameter),
 and PolicyKit for systemd (if user restart is granted via the params).
 
-If requested the `vnc::client::novnc` will try to setup the non-webserver
-parts of a noVNC site.
-
-### Setup Requirements **OPTIONAL**
-
-If you wish to use the novnc client, you must setup a webserver to point
-at the websocket.
-
 ### Beginning with vnc
 
 ## Usage
@@ -94,39 +86,17 @@ you'll probably want to set `vnc::server::manage_services = false`.
 You can directly export these sessions to noVNC via `include vnc::server::export::novnc`.
 
 ### Client
-Similarly, VNC clients can be loaded with:
+Similarly, VNC GUI client can be loaded with:
 
 ```puppet
 class { 'vnc::client::gui': }
 ```
-
-or
-
-```puppet
-class { 'vnc::client::novnc': }
-```
-
-The noVNC client takes a parameter `vnc_sessions` with a format of:
-```yaml
-vnc::client::novnc::vnc_servers:
-  session_name: server:port
-  other_session_name: server:otherport
-```
-
-By default token based configuration is used to let the webserver multiplex to a single `websockify` instance.
-An example HTML list of configured sessions is written out to `vnc::client::novnc::webserver_vnc_index`.
 
 ## Limitations
 
 This requires the systemd units from tigervnc 1.11+.
 
 You must manage you own firewall settings.
-
-There are too may ways folks may want to setup the webserver, so no attempt
-is made here to provide hooks for the websockets proxy via `httpd` or `nginx`.
-
-If you want to use the SSL wrapper for `websockify` you are responsible to
-depoy the cert, key, CA, and set the parameters you need.
 
 ## Development
 

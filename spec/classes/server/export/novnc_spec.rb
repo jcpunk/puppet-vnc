@@ -9,7 +9,7 @@ describe 'vnc::server::export::novnc' do
 
       context 'when using defaults' do
         it { is_expected.to compile.with_all_deps }
-        it { is_expected.to contain_class('vnc::client::novnc') }
+        it { is_expected.to contain_class('novnc') }
       end
 
       context 'with interesting arguments' do
@@ -31,7 +31,7 @@ describe 'vnc::server::export::novnc' do
         end
 
         it { is_expected.to compile }
-        it { is_expected.to contain_class('vnc::client::novnc') }
+        it { is_expected.to contain_class('novnc') }
         it {
           is_expected.to contain_file('/etc/websockify/tokens.cfg')
             .with_ensure('file')

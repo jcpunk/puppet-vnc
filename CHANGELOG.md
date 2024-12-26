@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 4.0.0
+
+**Breaking Changes**
+
+- All noVNC bits have been moved into a dedicated novnc module
+-- https://forge.puppet.com/modules/jcpunk/novnc
+
 ## Release 3.0.1
 
 **Features**

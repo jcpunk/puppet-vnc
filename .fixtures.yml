@@ -4,5 +4,6 @@
 fixtures:
   forge_modules:
     concat: "puppetlabs/concat"
+    novnc: "jcpunk/novnc"
     stdlib: "puppetlabs/stdlib"
     systemd: "puppet/systemd"

@@ -17,7 +17,7 @@ class vnc::server::export::novnc (
     $memo + { $user_info[0] => "${vnc_server_hostname}:${user_info[1]['displaynumber']}" }
   }
 
-  class { 'vnc::client::novnc':
+  class { 'novnc':
     vnc_servers => $connections,
   }
 }
