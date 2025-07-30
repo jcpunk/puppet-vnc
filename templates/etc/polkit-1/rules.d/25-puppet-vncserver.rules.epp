@@ -6,20 +6,16 @@
 | -%>
 <% $usernames.each |$username| { -%>
 polkit.addRule(function(action, subject) {
-    if (action.id == "org.freedesktop.systemd1.manage-units") {
-        if (action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>") {
-            var verb = action.lookup("verb");
-            if (verb == "start" || verb == "stop" || verb == "restart") {
-                if (subject.user == "<%= $username %>") {
-                  return polkit.Result.YES;
-                }
-            }
-            if (verb == "enable" || verb == "disable") {
-                if (subject.user == "<%= $username %>") {
-                  return polkit.Result.YES;
-                }
-            }
+    if ((action.id == "org.freedesktop.systemd1.manage-units" ||
+         action.id == "org.freedesktop.systemd1.manage-unit-files") &&
+        action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>" &&
+        subject.user == "<%= $username %>") {
+
+        var verb = action.lookup("verb");
+        if (verb == "start" || verb == "stop" || verb == "restart" || verb == "enable" || verb == "disable") {
+            return polkit.Result.YES;
         }
     }
+    return polkit.Result.NOT_HANDLED;
 });
 <% } %>
