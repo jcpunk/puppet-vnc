@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 4.1.0
+
+**Features**
+Polkit rules now permit users to enable/disable the service
+
 ## Release 4.0.0
 
 **Breaking Changes**
