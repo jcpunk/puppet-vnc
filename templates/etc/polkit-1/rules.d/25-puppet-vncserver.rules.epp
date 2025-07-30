@@ -10,14 +10,15 @@
  -%>
 <% $usernames.each |$username| { -%>
 polkit.addRule(function(action, subject) {
-    if (action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>" &&
-        subject.user == "<%= $username %>") {
-
     if (action.id == "org.freedesktop.systemd1.manage-units") {
-        if (["start", "stop", "restart"].includes(action.lookup("verb"))) {
-            return polkit.Result.YES;
+        if (action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>") {
+            var verb = action.lookup("verb");
+            if (verb == "start" || verb == "stop" || verb == "restart") {
+                if (subject.user == "<%= $username %>") {
+                  return polkit.Result.YES;
+                }
+            }
         }
     }
-    return polkit.Result.NOT_HANDLED;
 });
 <% } %>

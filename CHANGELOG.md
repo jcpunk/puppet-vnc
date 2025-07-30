@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 4.2.1
+
+**Bugfix**
+RHEL8 doesn't support `include` in polkit
+
 ## Release 4.2.0
 
 **Bugfix**
