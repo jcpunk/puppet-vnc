@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 4.2.0
+
+**Bugfix**
+org.freedesktop.systemd1.manage-unit-files on RHEL8 doesn't provide unit-name
+
 ## Release 4.1.1
 
 **Bugfix**

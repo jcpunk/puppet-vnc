@@ -4,15 +4,17 @@
   Array[String] $usernames = ['root'],
   Variant[String, Integer] $displaynumber,
 | -%>
+<%#
+  org.freedesktop.systemd1.manage-units is the dbus key for enable/disable
+  however, it doesn't provide the unit name
+ -%>
 <% $usernames.each |$username| { -%>
 polkit.addRule(function(action, subject) {
-    if ((action.id == "org.freedesktop.systemd1.manage-units" ||
-         action.id == "org.freedesktop.systemd1.manage-unit-files") &&
-        action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>" &&
+    if (action.lookup("unit") == "<%= $systemd_template_startswith %>@:<%= $displaynumber %>.<%= $systemd_template_endswith %>" &&
         subject.user == "<%= $username %>") {
 
-        var verb = action.lookup("verb");
-        if (verb == "start" || verb == "stop" || verb == "restart" || verb == "enable" || verb == "disable") {
+    if (action.id == "org.freedesktop.systemd1.manage-units") {
+        if (["start", "stop", "restart"].includes(action.lookup("verb"))) {
             return polkit.Result.YES;
         }
     }
