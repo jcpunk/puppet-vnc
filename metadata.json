@@ -1,6 +1,6 @@
 {
   "name": "jcpunk-vnc",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "author": "Pat Riehecky",
   "summary": "Manage tigervnc with systemd-logind support",
   "license": "Apache-2.0",
@@ -14,7 +14,7 @@
     },
     {
       "name": "puppetlabs/concat",
-      "version_requirement": ">= 4.2.0 < 10.0.0"
+      "version_requirement": ">= 4.2.0 < 11.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
@@ -22,7 +22,7 @@
     },
     {
       "name": "puppet/systemd",
-      "version_requirement": ">= 5.0.0 < 9.0.0"
+      "version_requirement": ">= 7.0.0 < 10.0.0"
     }
   ],
   "operatingsystem_support": [
@@ -74,7 +74,7 @@
     "tigervnc",
     "vnc"
   ],
-  "pdk-version": "3.5.1 (g2719cbc)",
-  "template-url": "pdk-default#3.5.1.2",
-  "template-ref": "tags/3.5.1.2-0-gfa96b82"
+  "pdk-version": "3.6.1 (ga18bc44)",
+  "template-url": "pdk-default#3.6.1",
+  "template-ref": "tags/3.6.1-0-gb9426e5"
 }
